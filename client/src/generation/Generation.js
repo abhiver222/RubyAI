@@ -1,14 +1,25 @@
 // Generation.js
-import React, { useState } from 'react';
-import { Container, Grid, Button, Box, TextareaAutosize, Typography } from '@mui/material';
+import React, { useState, useRef } from 'react';
+import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
+import {RichTextEditor} from './RichTextEditor';
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
+  const [emails, setEmails] = useState([1,2,3]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     // Call to external API and set display accordingly...
+    // const data = await fetchAPI();
+    // setEmails(data);
+    // editorRef.current.setContent(data[0]); 
+  }
+
+  const handleTabChange = (index) => {
+    setCurrentIndex(index);
+
   }
 
   return (
@@ -24,20 +35,27 @@ export const Generation = () => {
           <Grid item xs={12} sm={6}>
             <GenerationParamsCard />
             <Box display="flex" justifyContent="center" m={1} p={1}>
-          <Button variant="contained" color="primary" onClick={handleGenerate}>
-            Generate
-          </Button>
-        </Box>
+              <Button variant="contained" color="primary" onClick={handleGenerate} size='large' sx={{marginTop: "18px"}}>
+                Generate
+              </Button>
+            </Box>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextareaAutosize
-            minRows={15}
-            style={{ width: '100%', padding: 20 }}
-            value={display}
-            readOnly
-          />
-        </Grid>
+        {emails.length && (
+          <Grid item xs={12}>
+            <Tabs value={currentIndex} >
+              {emails.map((email, index) => (
+                  <Tab key={index} label={`Email ${index + 1}`} onClick={() => handleTabChange(index)}/>
+              ))}
+            </Tabs>
+            <TextareaAutosize
+              minRows={15}
+              style={{ width: '100%', padding: 20, marginTop: '20px' }}
+              value={emails[currentIndex]}
+              readOnly={false}
+            />
+          </Grid>
+        )}
       </Container>
     </Box>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route,Routes, Link } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-
+import { LandingPage } from './LandingPage';
 // Your page components
 import {Configuration} from './configuration/Configuration';
 import {Generation} from './generation/Generation';
@@ -30,7 +30,7 @@ function App() {
       <Router>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" style={{ flexGrow: 1 }}>
+            <Typography variant="h6" style={{ flexGrow: 1 }} component={Link} to="/">
               RubyAI
             </Typography>
             <Button color="inherit" component={Link} to="/configuration">Configuration</Button>
@@ -39,6 +39,7 @@ function App() {
           </Toolbar>
         </AppBar>
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/configuration" element={<Configuration />} />
           <Route path="/generation" element={<Generation />} />
           <Route path="/feedback" element={<Feedback />} />

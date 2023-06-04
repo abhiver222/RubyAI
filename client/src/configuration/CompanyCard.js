@@ -29,7 +29,7 @@ const CompanyCard = () => {
   };
 
   return (
-    <Card variant="outlined" sx={{ backgroundColor: '#d3d3d3', width: '80%', boxShadow: 3 }}>
+    <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d',  boxShadow: 3 }}>
       <CardContent>
         <Typography variant="h5">
           Company Information

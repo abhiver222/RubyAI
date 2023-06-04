@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, TextField, Button } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
 
 const JobCard = () => {
   const [jobDescription, setJobDescription] = useState({
@@ -28,7 +28,7 @@ const JobCard = () => {
   };
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{backgroundColor: '#4d4d4d'}}>
       <CardContent>
         <Typography variant="h5">
           Job Description
@@ -46,9 +46,11 @@ const JobCard = () => {
             margin="normal"
           />
         ))}
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          Save
-        </Button>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Save
+          </Button>
+        </Box>
       </CardContent>
     </Card>
   );
