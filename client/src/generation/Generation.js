@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react';
 import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
-import {RichTextEditor} from './RichTextEditor';
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');

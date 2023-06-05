@@ -7,7 +7,10 @@ export const GenerationParamsCard = () => {
   const [genParams, setGenParams] = useState({
     creativity: 0.5,
     mood: '',
-    numGenerations: 1
+    numGenerations: 1,
+    length: 'short',
+    readability: 'easy',
+    medium: 'email'
   });
 
   const handleChange = (event) => {
@@ -93,6 +96,21 @@ export const GenerationParamsCard = () => {
             <MenuItem value="easy">Easy</MenuItem>
             <MenuItem value="medium">Medium</MenuItem>
             <MenuItem value="hard">Hard</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="Medium-label">Medium</InputLabel>
+          <Select
+            labelId="Medium-label"
+            id="Medium"
+            name="Medium"
+            value={genParams.Medium}
+            onChange={handleChange}
+            fullWidth
+          >
+            <MenuItem value="email">Email</MenuItem>
+            <MenuItem value="linkedin">Linkedin</MenuItem>
+            <MenuItem value="dm">Direct Message</MenuItem>
           </Select>
         </FormControl>
       </CardContent>
