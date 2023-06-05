@@ -1,4 +1,4 @@
-from gpt import get_gpt4_completion
+from gpt import get_gpt4_completion, get_chatgpt_completion, get_chatgpt_completions_parallel
 # from generate import Generate
 
 from abc import ABC, abstractmethod
@@ -17,7 +17,7 @@ class GenerateEmail(Generate):
     def generate(self, generation_data, company_data, job_description):
         # validate data to have all properties
         # create email generation prompt with data
-        temperature = generation_data['creativity']
+        temperature = int(generation_data['creativity'])
         num_generations = generation_data['num_generations']
         print("generationdata", generation_data)
         print("companydata", company_data)
@@ -28,12 +28,13 @@ class GenerateEmail(Generate):
         print("prompt", prompt)
 
         # generate emails and store in DB
-        # emails = get_gpt4_completion(system_prompt, prompt, temperature, num_generations)
+        emails = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations)
         # add ids for emails into emails list in generation
+        
 
         # return generated emails
-        # return emails
-        return []
+        return emails
+        # return []
     
     def get_prompt(self, generation_data, company_data, job_description):
         system_prompt = f"""You are a recruiter for {company_data["company_name"]} in {generation_data['industry']} industry and 

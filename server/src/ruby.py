@@ -13,6 +13,7 @@ class Ruby(object):
     generation_data: {name, companyname, industry, linkedin, website, bio, creativity, num_generations, mood, length, readability, medium}
     '''
     def generate_emails(self, data):
+        print("Ruby is generating emails")
         # get json data
 
         # get data from db about company and JD
@@ -22,6 +23,12 @@ class Ruby(object):
         # call the email generator with data
         emails = self.email_generator.generate(data, company_data, job_description)
 
+        # store generation params in db
+        generation_id = self.insert_generation(data)
+
+        # store emails in db with generation id
+        emails = self.insert_emails(emails, generation_id)
+
         return emails
 
     def upsert_job(self, data):
@@ -29,3 +36,9 @@ class Ruby(object):
     
     def upsert_company(self, data):
         return self.models.upsert_company(data)
+    
+    def insert_generation(self, data):
+        return self.models.insert_generation(data)
+    
+    def insert_emails(self, emails, generation_id):
+        return self.models.insert_emails(emails, generation_id)

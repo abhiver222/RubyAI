@@ -22,8 +22,7 @@ class Models(object):
 
     def insert_new(self, table_name, data):
         table = self.db.table(table_name)
-        if 'id' not in data:
-            data['id'] = str(uuid.uuid4())  # Add a random UUID as id if not provided
+        data['id'] = str(uuid.uuid4())
         table.insert(data)
         return data['id']
 
@@ -42,6 +41,18 @@ class Models(object):
     
     def insert_generation(self,data):
         return self.insert_new('generation', data)
+    
+    def insert_email(self,data):
+        return self.insert_new('email', data)
+    
+    def insert_emails(self,emails, generation_id):
+        inserted_emails = []
+        for email in emails:
+            email_data = {"content": email, "generation_id": generation_id, "feedback": ''}
+            email_id = self.insert_email(email_data)
+            inserted_emails.append({'email':email, 'id':email_id})
+        return inserted_emails
+        
 
     """
     for the demo, we assume only one company
