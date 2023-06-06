@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box, IconButton } from '@mui/material';
 import MagicWandIcon from '@mui/icons-material/Autorenew';  // choose an icon that suits your needs
-import {SERVER_URL} from '../utils';
+import {SERVER_URL, isSome} from '../utils';
 
 
 const CompanyCard = () => {
@@ -17,7 +17,9 @@ const CompanyCard = () => {
       const response = await fetch(`${SERVER_URL}/get_company_info`);
       const data = await response.json();
       console.log("get company info",data)
-      setCompanyInfo(data.company_info);
+      if(isSome(data.company_info)){
+        setCompanyInfo((prevState) => ({...prevState, ...data.company_info}));
+      }
     };
     getCompanyInfo();
   }, []);

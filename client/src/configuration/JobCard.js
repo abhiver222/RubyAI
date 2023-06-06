@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
-import { SERVER_URL } from '../utils';
+import { SERVER_URL, isSome } from '../utils';
 
 const JobCard = () => {
   const [jobDescription, setJobDescription] = useState({
@@ -16,7 +16,9 @@ const JobCard = () => {
       const response = await fetch(`${SERVER_URL}/get_job_description`);
       const data = await response.json();
       console.log("get jd",data)
-      setJobDescription(data.job_description);
+      if(isSome(data.job_description)){
+        setJobDescription((prevState) => ({...prevState, ...data.job_description}));
+      }
     };
     getJobDescription();
   }, []);
