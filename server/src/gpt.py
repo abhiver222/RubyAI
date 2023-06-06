@@ -29,12 +29,31 @@ def get_chatgpt_completion(system_prompt, chat_prompt, temperature=0.2, num_gene
     answer = [choice["message"]["content"].strip() for choice in r.choices]
     return answer 
 
-def get_chatgpt_completions_parallel(system_prompt, chat_prompt, temperature=0.2, num_generations=1, max_tokens=1000):
+# def get_chatgpt_completions_parallel(system_prompt, chat_prompt, temperature=0.2, num_generations=1, max_tokens=1000):
+#     chat_messages = create_chat_prompt(system_prompt, chat_prompt)
+#     openai.api_key = os.getenv('OPENAI_API_KEY')
+#     print('Sending requests to GPT-3.5 in parallel')
+
+#     def call_api():
+#         r = openai.ChatCompletion.create(model="gpt-3.5-turbo",
+#                                          messages=chat_messages,
+#                                          temperature=temperature,
+#                                          n=1,
+#                                          max_tokens=max_tokens)
+#         return r.choices[0]["message"]["content"].strip()
+
+#     with concurrent.futures.ThreadPoolExecutor() as executor:
+#         futures = [executor.submit(call_api) for _ in range(num_generations)]
+#         results = [future.result() for future in concurrent.futures.as_completed(futures)]
+
+#     return results
+
+def get_chatgpt_completions_parallel(system_prompt, chat_prompt, initial_temperature=0.2, num_generations=1, max_tokens=1000):
     chat_messages = create_chat_prompt(system_prompt, chat_prompt)
     openai.api_key = os.getenv('OPENAI_API_KEY')
     print('Sending requests to GPT-3.5 in parallel')
 
-    def call_api():
+    def call_api(temperature):
         r = openai.ChatCompletion.create(model="gpt-3.5-turbo",
                                          messages=chat_messages,
                                          temperature=temperature,
@@ -43,7 +62,13 @@ def get_chatgpt_completions_parallel(system_prompt, chat_prompt, temperature=0.2
         return r.choices[0]["message"]["content"].strip()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(call_api) for _ in range(num_generations)]
+        # Start with the initial temperature and increment by 0.01 with each call
+        temperature = initial_temperature
+        futures = []
+        for i in range(num_generations):
+            futures.append(executor.submit(call_api, temperature))
+            temperature = min(temperature + 0.015, 1)  # ensure temperature does not exceed 1
+
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
 
     return results
