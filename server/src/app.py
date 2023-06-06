@@ -12,10 +12,12 @@ def health():
     print("health check")
     return jsonify({'message': 'Server is up and running'})
 
-@app.route('/', methods=['GET'])
+@app.route('/print_table', methods=['GET'])
 def print_db():
     print("print db")
-    ruby.print_db()
+    table = request.args.get('table', "company")
+    ruby.print_db(table)
+    return jsonify({'message': 'printed db successfully'})
 
 # Endpoint for storing company information
 @app.route('/company_info', methods=['POST'])
