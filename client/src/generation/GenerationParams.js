@@ -31,8 +31,8 @@ export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) =>
           <InputLabel id="num-generations-label">Number of Generations</InputLabel>
           <Select
             labelId="num-generations-label"
-            id="numGenerations"
-            name="numGenerations"
+            id="num_generations"
+            name="num_generations"
             value={genParams.num_generations}
             onChange={handleChange}
             fullWidth
