@@ -33,7 +33,7 @@ export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) =>
             labelId="num-generations-label"
             id="numGenerations"
             name="numGenerations"
-            value={genParams.numGenerations}
+            value={genParams.num_generations}
             onChange={handleChange}
             fullWidth
           >
