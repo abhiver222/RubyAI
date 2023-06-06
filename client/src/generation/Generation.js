@@ -65,7 +65,7 @@ export const Generation = () => {
           console.log("resp data", messages, message);
             setMessages(messages);
         } else {
-          console.error("Unable to call server", response);
+          console.error("Unable to call server", response.json());
         }
       } catch (e) {
         console.error("Unable to call server", e);

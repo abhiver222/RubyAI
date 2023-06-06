@@ -54,9 +54,11 @@ def get_job_description():
 def generate_messages():
     generate_data = request.json
     print("generate messages", generate_data)
-    messages, resp_message = ruby.generate_messages(generate_data)
-    print(messages)
-    return jsonify({'message': resp_message, 'messages': messages})
+    messageData, resp_message = ruby.generate_messages(generate_data)
+    if not messageData:
+        return jsonify({'message': resp_message}), 400
+    print(messageData)
+    return jsonify({'message': resp_message, 'messageData': messageData})
 
 
 @app.route('/submit_feedback', methods=['POST'])
