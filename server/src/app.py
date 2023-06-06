@@ -6,6 +6,7 @@ app = Flask(__name__)
 db = TinyDB('database.json')
 ruby = Ruby(db)
 
+@app.route('/', methods=['GET'])
 @app.route('/health', methods=['GET'])
 def health():
     print("health check")
