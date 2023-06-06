@@ -4,3 +4,4 @@ gunicorn==20.1.0
 nltk==3.8.1
 flask
 py-readability-metrics
+flask-cors
