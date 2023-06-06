@@ -14,17 +14,17 @@ export const Generation = () => {
 
   const [candidateInfo, setCandidateInfo] = useState({
     name: '',
-    companyName: '',
+    candidate_company: '',
     industry: '',
-    companyUrl: '',
-    linkedinUrl: '',
+    company_url: '',
+    linkedin_url: '',
     bio: ''
   });
 
   const [genParams, setGenParams] = useState({
     creativity: 0.5,
     mood: 'formal',
-    numGenerations: 1,
+    num_generations: 1,
     length: 'short',
     readability: 'easy',
     medium: 'email'

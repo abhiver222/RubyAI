@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Box } from '@mui/material';
 
 export const CandidateInfoCard = ({candidateInfo, handleChange}) => {
-
+const field_to_label = {
+    name: 'Name',
+    candidate_company: 'Company',
+    industry: 'Industry',
+    company_url: 'Company URL',
+    linkedin_url: 'LinkedIn URL',
+    bio: 'Candidate Bio'
+}
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3 }}>
       <CardContent>
@@ -14,7 +21,7 @@ export const CandidateInfoCard = ({candidateInfo, handleChange}) => {
           <TextField
             key={field}
             name={field}
-            label={field.charAt(0).toUpperCase() + field.slice(1)}
+            label={field_to_label[field]}
             placeholder={`Enter ${field}`}
             value={candidateInfo[field]}
             onChange={handleChange}

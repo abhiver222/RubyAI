@@ -48,8 +48,8 @@ class GenerateMessage(Generate):
                     seniority: {job_description['seniority']}
                     location: {job_description['location']}
                     
-                    The candidate's name is {generation_data['name']} and their linkedin is {generation_data['linkedin']}.
-                    They currently work in {generation_data['company_name']} industry and their website is {generation_data['company_url']}.
+                    The candidate's name is {generation_data['name']} and their linkedin is {generation_data['linkedin_url']}.
+                    They currently work in {generation_data['candidate_company']} industry and their website is {generation_data['company_url']}.
                     Their bio is {generation_data['bio']}.
 
                     Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} 
