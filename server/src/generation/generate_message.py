@@ -39,7 +39,7 @@ class GenerateMessage(Generate):
     def get_prompt(self, generation_data, company_data, job_description):
         system_prompt = f"""You are a recruiter for {company_data["company_name"]} in {generation_data['industry']} industry and 
                     are writing an message to a candidate for a {job_description['position']} position at {company_data['company_name']}. 
-                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. The company's brand voice is {company_data['voice']}."""
+                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. The company's brand voice is {company_data['brand_voice']}."""
         
         prompt = f"""Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} in the companys brand voice for this job description                   
                     position: {job_description['position']}
