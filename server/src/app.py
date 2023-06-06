@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from tinydb import TinyDB, Query
 from ruby import Ruby
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+CORS(app)
 db = TinyDB('database.json')
 ruby = Ruby(db)
 
