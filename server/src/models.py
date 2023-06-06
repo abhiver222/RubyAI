@@ -22,7 +22,7 @@ class Models(object):
             table.insert(data)
             return data['id']
 
-    def insert_new(self, table_name, data):
+    def insert_new_with_id(self, table_name, data):
         table = self.db.table(table_name)
         data['id'] = str(uuid.uuid4())
         table.insert(data)
@@ -42,10 +42,10 @@ class Models(object):
         return self.insert_or_update_single('job', data)
     
     def insert_generation(self,data):
-        return self.insert_new('generation', data)
+        return self.insert_new_with_id('generation', data)
     
     def insert_message(self,data):
-        return self.insert_new('message', data)
+        return self.insert_new_with_id('message', data)
     
     def insert_messages(self,messages, generation_id):
         inserted_messages = []
@@ -84,3 +84,29 @@ class Models(object):
         result = table.search(User.id == document_id)
         return result[0] if result else None
 
+    def insert_feedback(self, feedback_data):
+        message_id = feedback_data['message_id']
+        if not message_id:
+            return None
+        message = self.get_by_id('message', message_id)
+        if not message:
+            return None
+        feedback = feedback_data['feedback']
+        if not feedback:
+            return None
+        message['feedback'] = feedback
+        table = self.db.table('message')
+        table.update(message, doc_ids=[message_id])
+        return message_id
+    
+    def send_message(self, message_data):
+        message_id = message_data['message_id']
+        if not message_id:
+            return None
+        message = self.get_by_id('message', message_id)
+        if not message:
+            return None
+        message['sent'] = True
+        table = self.db.table('message')
+        table.update(message, doc_ids=[message_id])
+        return message_id

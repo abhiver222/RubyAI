@@ -53,7 +53,7 @@ class GenerateMessage(Generate):
                     Their bio is {generation_data['bio']}.
 
                     Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} 
-                    in a {generation_data['mood']} mood to the candidate to get them to apply to the job.
+                    in a {generation_data['mood']} mood to the candidate to get them to apply to the job. Talk about the benefits of working at {company_data["company_name"]}.
                     Make the message {generation_data['readability']} to read and use flesh kinkaid readability scores to measure.
                     ease of reading. Only return the message no need to return the score.
                     """

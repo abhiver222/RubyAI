@@ -54,3 +54,9 @@ class Ruby(object):
     def print_db(self, table_name):
         table = self.db.table(table_name)
         print(table.all())
+
+    def insert_feedback(self, feedback_data):
+        return self.models.insert_feedback(feedback_data)
+    
+    def send_message(self, message):
+        return self.models.send_message(message)

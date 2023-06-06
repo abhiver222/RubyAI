@@ -63,9 +63,15 @@ def generate_messages():
 
 @app.route('/submit_feedback', methods=['POST'])
 def submit_feedback():
-    job_data = request.json
-    db.insert(job_data)
-    return jsonify({'message': 'Job description information stored successfully'})
+    feedback_data = request.json
+    message_id = ruby.insert_feedback(feedback_data)
+    return jsonify({'message': 'Feedback stored successfully', 'message_id': message_id})
+
+@app.route('/send_message', methods=['POST'])
+def submit_feedback():
+    message_data = request.json
+    message_id = ruby.send_message(message_data)
+    return jsonify({'message': 'Message sent successfully', 'message_id': message_id})
 
 if __name__ == '__main__':
     app.run()

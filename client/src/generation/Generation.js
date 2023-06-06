@@ -1,6 +1,6 @@
 // Generation.js
 import React, { useState, useRef } from 'react';
-import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -11,6 +11,8 @@ export const Generation = () => {
   const [display, setDisplay] = useState('');
   const [messages, setMessages] = useState(["hello","world","test"]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [feedbacks, setFeedbacks] = useState(Array(messages.length).fill(''));
+
 
   const [candidateInfo, setCandidateInfo] = useState({
     name: '',
@@ -43,6 +45,12 @@ export const Generation = () => {
       [event.target.name]: event.target.value
     });
   };
+
+  const handleFeedbackChange = (index, e) => {
+    let newFeedbacks = [...feedbacks];
+    newFeedbacks[index] = e.target.value;
+    setFeedbacks(newFeedbacks);
+  }
 
   const generateDisabled = () =>{
     return Object.values(candidateInfo).some((value) => value === '' || !isSome(value)) || Object.values(genParams).some((value) => value === '' || !isSome(value)) 
@@ -78,6 +86,11 @@ export const Generation = () => {
     setCurrentIndex(index);
   }
 
+  const handleSendEmail = async () => {
+  }
+
+  const handleSubmitFeedback = async () => {
+  }
 
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
@@ -119,6 +132,7 @@ export const Generation = () => {
       </Grid>
     </Grid>
         {messages.length && (
+            <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3, p: 2, mt: 4 }}>
           <Grid item xs={12}>
             <Tabs value={currentIndex} >
               {messages.map((_, index) => (
@@ -131,7 +145,23 @@ export const Generation = () => {
               value={messages[currentIndex]}
               readOnly={true}
             />
+            <TextareaAutosize
+                minRows={3}
+                placeholder="Your feedback here..."
+                style={{ width: '100%', padding: 20, marginTop: '20px', marginBottom: '20px' }}
+                value={feedbacks[currentIndex]}
+                onChange={(e) => handleFeedbackChange(currentIndex, e)}
+                />
+            <Box display="flex" justifyContent="flex-end" m={1} p={1}>
+            <Button variant="contained" color="primary" onClick={handleSendEmail} sx={{ marginRight: "10px" }}>
+            Send Email
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleSubmitFeedback}>
+            Submit Feedback
+            </Button>
+      </Box>
           </Grid>
+          </Card>
         )}
       </Container>
     </Box>
