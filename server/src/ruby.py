@@ -14,13 +14,13 @@ class Ruby(object):
     '''
     def generate_messages(self, data):
         print("Ruby is generating messages")
-        # check if company and job description are in db
-        if not self.models.ruby_configured:
-            return None, "Configure job description and company info in Configure tab"
 
         # get data from db about company and JD
         company_data = self.models.get_company()
         job_description = self.models.get_job_description()
+
+        if not company_data or not job_description:
+            return None, "Configure job description and company info in Configure tab"
 
         # call the email generator with data
         messages = self.email_generator.generate(data, company_data, job_description)
