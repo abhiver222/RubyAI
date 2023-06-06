@@ -12,11 +12,11 @@ class Generate(ABC):
     def get_prompt(self, prompt, context):
         pass
 
-class GenerateEmail(Generate):
+class GenerateMessage(Generate):
     
     def generate(self, generation_data, company_data, job_description):
         # validate data to have all properties
-        # create email generation prompt with data
+        # create message generation prompt with data
         temperature = int(generation_data['creativity'])
         num_generations = generation_data['num_generations']
         print("generationdata", generation_data)
@@ -27,21 +27,21 @@ class GenerateEmail(Generate):
         print("system_prompt", system_prompt)
         print("prompt", prompt)
 
-        # generate emails and store in DB
-        emails = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations)
-        # add ids for emails into emails list in generation
+        # generate messages and store in DB
+        messages = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations)
+        # add ids for messages into messages list in generation
 
 
-        # return generated emails
-        return emails
+        # return generated messages
+        return messages
         # return []
     
     def get_prompt(self, generation_data, company_data, job_description):
         system_prompt = f"""You are a recruiter for {company_data["company_name"]} in {generation_data['industry']} industry and 
-                    are writing an email to a candidate for a {job_description['position']} position at {company_data['company_name']}. 
-                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. The company's voice is {company_data['brand_voice']}."""
+                    are writing an message to a candidate for a {job_description['position']} position at {company_data['company_name']}. 
+                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. The company's brand voice is {company_data['voice']}."""
         
-        prompt = f"""Write a recruitment email in the companys brand voice for this job description                   
+        prompt = f"""Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} in the companys brand voice for this job description                   
                     position: {job_description['position']}
                     responsibilities: {job_description['responsibilities']}
                     skills: {job_description['skills']}
@@ -54,8 +54,8 @@ class GenerateEmail(Generate):
 
                     Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} 
                     in a {generation_data['mood']} mood to the candidate to get them to apply to the job.
-                    Make the email {generation_data['readability']} to read and use flesh kinkaid readability scores to measure
-                    ease of reading. Only return the email no need to return the score.
+                    Make the message {generation_data['readability']} to read and use flesh kinkaid readability scores to measure.
+                    ease of reading. Only return the message no need to return the score.
                     """
         return (system_prompt, prompt)
 

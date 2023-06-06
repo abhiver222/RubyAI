@@ -1,19 +1,19 @@
-from generation.generate_email import GenerateEmail
+from generation.generate_message import GenerateMessage
 from generation.generate_mission import GenerateMission
 from models import Models
 
 class Ruby(object):
     def __init__(self, db):
         self.db = db
-        self.email_generator = GenerateEmail()
+        self.email_generator = GenerateMessage()
         self.mission_generator = GenerateMission()
         self.models = Models(db)
 
     '''
     generation_data: {name, companyname, industry, linkedin, website, bio, creativity, num_generations, mood, length, readability, medium}
     '''
-    def generate_emails(self, data):
-        print("Ruby is generating emails")
+    def generate_messages(self, data):
+        print("Ruby is generating messages")
         # check if company and job description are in db
         if not self.models.ruby_configured:
             return None, "Configure job description and company info in Configure tab"
@@ -23,15 +23,15 @@ class Ruby(object):
         job_description = self.models.get_job_description()
 
         # call the email generator with data
-        emails = self.email_generator.generate(data, company_data, job_description)
+        messages = self.email_generator.generate(data, company_data, job_description)
 
         # store generation params in db
         generation_id = self.insert_generation(data)
 
-        # store emails in db with generation id
-        emails = self.insert_emails(emails, generation_id)
+        # store messages in db with generation id
+        messages = self.insert_messages(messages, generation_id)
 
-        return emails, "sucessfully generated emails"
+        return messages, "sucessfully generated messages"
 
     def upsert_job(self, data):
         return self.models.upsert_job(data)
@@ -42,8 +42,8 @@ class Ruby(object):
     def insert_generation(self, data):
         return self.models.insert_generation(data)
     
-    def insert_emails(self, emails, generation_id):
-        return self.models.insert_emails(emails, generation_id)
+    def insert_messages(self, messages, generation_id):
+        return self.models.insert_messages(messages, generation_id)
     
     def get_company_info(self):
         return self.models.get_company()

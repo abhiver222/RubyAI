@@ -9,7 +9,7 @@ import { isSome, SERVER_URL } from '../utils';
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
-  const [messages, setmessages] = useState([1,2,3]);
+  const [messages, setMessages] = useState(["hello","world","test"]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [candidateInfo, setCandidateInfo] = useState({
@@ -49,17 +49,35 @@ export const Generation = () => {
   }
 
   const handleGenerate = async () => {
-    // Call to external API and set display accordingly...
-    // const data = await fetchAPI();
-    // setmessages(data);
-    // editorRef.current.setContent(data[0]); 
+    try {
+        const response = await fetch(`${SERVER_URL}/generate_messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...candidateInfo, ...genParams }),
+        });
+        if (response.ok) {
+          console.log("gen emails", response);
+          
+          const { messageData,  message} = await response.json();
+          const messages = messageData.map((message) => message.message);
+          console.log("resp data", messages, message);
+            setMessages(messages);
+        } else {
+          console.error("Unable to call server", response);
+        }
+      } catch (e) {
+        console.error("Unable to call server", e);
+        handleError();
+      }
 
   }
 
   const handleTabChange = (index) => {
     setCurrentIndex(index);
-
   }
+
 
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
@@ -104,14 +122,14 @@ export const Generation = () => {
           <Grid item xs={12}>
             <Tabs value={currentIndex} >
               {messages.map((_, index) => (
-                  <Tab key={index} label={`Email ${index + 1}`} onClick={() => handleTabChange(index)}/>
+                  <Tab key={index} label={`Message ${index + 1}`} onClick={() => handleTabChange(index)}/>
               ))}
             </Tabs>
             <TextareaAutosize
               minRows={15}
               style={{ width: '100%', padding: 20, marginTop: '20px' }}
               value={messages[currentIndex]}
-              readOnly={false}
+              readOnly={true}
             />
           </Grid>
         )}

@@ -50,13 +50,13 @@ def get_job_description():
     job_description = ruby.get_job_description()
     return jsonify({'message': 'Job description stored successfully', 'job_description': job_description}), 200
 
-@app.route('/generate_emails', methods=['POST'])
-def generate_emails():
+@app.route('/generate_messages', methods=['POST'])
+def generate_messages():
     generate_data = request.json
-    print("generate emails", generate_data)
-    emails, message = ruby.generate_emails(generate_data)
-    print(emails)
-    return jsonify({'message': 'generated emails successfully'})
+    print("generate messages", generate_data)
+    messages, resp_message = ruby.generate_messages(generate_data)
+    print(messages)
+    return jsonify({'message': resp_message, 'messages': messages})
 
 
 @app.route('/submit_feedback', methods=['POST'])

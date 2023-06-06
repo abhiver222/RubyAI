@@ -44,19 +44,19 @@ class Models(object):
     def insert_generation(self,data):
         return self.insert_new('generation', data)
     
-    def insert_email(self,data):
-        return self.insert_new('email', data)
+    def insert_message(self,data):
+        return self.insert_new('message', data)
     
-    def insert_emails(self,emails, generation_id):
-        inserted_emails = []
-        for email in emails:
-            r = Readability(email)    
+    def insert_messages(self,messages, generation_id):
+        inserted_messages = []
+        for message in messages:
+            r = Readability(message)    
             fk = r.flesch()
             readability = {"score": fk.score, "grade_level": fk.grade_levels, "ease": fk.ease}
-            email_data = {"content": email, "generation_id": generation_id, "feedback": '', "readability": readability}
-            email_id = self.insert_email(email_data)
-            inserted_emails.append({'email':email, 'id':email_id})
-        return inserted_emails
+            message_data = {"content": message, "generation_id": generation_id, "feedback": '', "readability": readability}
+            message_id = self.insert_message(message_data)
+            inserted_messages.append({'message':message, 'id':message_id})
+        return inserted_messages
         
 
     """
