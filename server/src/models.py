@@ -1,6 +1,7 @@
 from tinydb import Query
 import uuid
 from readability import Readability
+import time
 
 
 class Models(object):
@@ -107,6 +108,7 @@ class Models(object):
         if not message:
             return None
         message['sent'] = True
+        message['sent_at'] = time.time()
         table = self.db.table('message')
         table.update(message, doc_ids=[message_id])
         return message_id
