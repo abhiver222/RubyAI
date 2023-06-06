@@ -69,7 +69,6 @@ export const Generation = () => {
         }
       } catch (e) {
         console.error("Unable to call server", e);
-        handleError();
       }
 
   }
