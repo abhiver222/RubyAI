@@ -1,5 +1,7 @@
 from tinydb import Query
 import uuid
+from readability import Readability
+
 
 class Models(object):
     def __init__(self, db):
@@ -48,7 +50,10 @@ class Models(object):
     def insert_emails(self,emails, generation_id):
         inserted_emails = []
         for email in emails:
-            email_data = {"content": email, "generation_id": generation_id, "feedback": ''}
+            r = Readability(email)    
+            fk = r.flesch()
+            readability = {"score": fk.score, "grade_level": fk.grade_levels, "ease": fk.ease}
+            email_data = {"content": email, "generation_id": generation_id, "feedback": '', "readability": readability}
             email_id = self.insert_email(email_data)
             inserted_emails.append({'email':email, 'id':email_id})
         return inserted_emails
