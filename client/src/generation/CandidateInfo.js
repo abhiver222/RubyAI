@@ -2,22 +2,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Box } from '@mui/material';
 
-export const CandidateInfoCard = () => {
-  const [candidateInfo, setCandidateInfo] = useState({
-    name: '',
-    companyName: '',
-    industry: '',
-    companyUrl: '',
-    linkedinUrl: '',
-    bio: ''
-  });
-
-  const handleChange = (event) => {
-    setCandidateInfo({
-      ...candidateInfo,
-      [event.target.name]: event.target.value
-    });
-  };
+export const CandidateInfoCard = ({candidateInfo, handleChange}) => {
 
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3 }}>

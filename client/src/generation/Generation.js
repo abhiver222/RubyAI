@@ -4,18 +4,56 @@ import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, A
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { isSome, SERVER_URL } from '../utils';
 
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
-  const [emails, setEmails] = useState([1,2,3]);
+  const [messages, setmessages] = useState([1,2,3]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [candidateInfo, setCandidateInfo] = useState({
+    name: '',
+    companyName: '',
+    industry: '',
+    companyUrl: '',
+    linkedinUrl: '',
+    bio: ''
+  });
+
+  const [genParams, setGenParams] = useState({
+    creativity: 0.5,
+    mood: 'formal',
+    numGenerations: 1,
+    length: 'short',
+    readability: 'easy',
+    medium: 'email'
+  });
+
+  const handleCandidateChange = (event) => {
+    setCandidateInfo({
+      ...candidateInfo,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleGenParamsChange = (event) => {
+    setGenParams({
+      ...genParams,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const generateDisabled = () =>{
+    return Object.values(candidateInfo).some((value) => value === '' || !isSome(value)) || Object.values(genParams).some((value) => value === '' || !isSome(value)) 
+  }
 
   const handleGenerate = async () => {
     // Call to external API and set display accordingly...
     // const data = await fetchAPI();
-    // setEmails(data);
+    // setmessages(data);
     // editorRef.current.setContent(data[0]); 
+
   }
 
   const handleTabChange = (index) => {
@@ -34,6 +72,7 @@ export const Generation = () => {
         <Accordion defaultExpanded>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
+            
             aria-controls="generation-params-content"
             id="generation-params-header"  
             sx={{
@@ -43,17 +82,17 @@ export const Generation = () => {
               }}          
           >
             <Typography variant="h5" style={{marginTop: "4px"}}>Generation Parameters</Typography>
-            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}}>
+            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}} disabled={generateDisabled()}>
             Generate
           </Button>         
         </AccordionSummary>
           <AccordionDetails>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <CandidateInfoCard />
+                <CandidateInfoCard candidateInfo={candidateInfo} handleChange={handleCandidateChange}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <GenerationParamsCard />
+                <GenerationParamsCard genParams={genParams} handleChange={handleGenParamsChange} setGenParams={setGenParams}/>
               </Grid>
             </Grid>
           </AccordionDetails>
@@ -61,17 +100,17 @@ export const Generation = () => {
 
       </Grid>
     </Grid>
-        {emails.length && (
+        {messages.length && (
           <Grid item xs={12}>
             <Tabs value={currentIndex} >
-              {emails.map((email, index) => (
+              {messages.map((_, index) => (
                   <Tab key={index} label={`Email ${index + 1}`} onClick={() => handleTabChange(index)}/>
               ))}
             </Tabs>
             <TextareaAutosize
               minRows={15}
               style={{ width: '100%', padding: 20, marginTop: '20px' }}
-              value={emails[currentIndex]}
+              value={messages[currentIndex]}
               readOnly={false}
             />
           </Grid>

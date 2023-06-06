@@ -70,6 +70,9 @@ class Models(object):
     """
     def get_job_description(self):
         return self.get_single_entry('job')
+    
+    def ruby_configured(self):
+        return self.get_company() is not None and self.get_job_description() is not None
 
     def insert(self,table_name, document):
         table = self.db.table(table_name)

@@ -3,22 +3,8 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Box, Slider, Select, MenuItem } from '@mui/material';
 import { FormControl, InputLabel } from '@mui/material';
 
-export const GenerationParamsCard = () => {
-  const [genParams, setGenParams] = useState({
-    creativity: 0.5,
-    mood: '',
-    numGenerations: 1,
-    length: 'short',
-    readability: 'easy',
-    medium: 'email'
-  });
+export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) => {
 
-  const handleChange = (event) => {
-    setGenParams({
-      ...genParams,
-      [event.target.name]: event.target.value
-    });
-  };
 
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3 }}>
@@ -87,12 +73,12 @@ export const GenerationParamsCard = () => {
           </Select>
         </FormControl>
         <FormControl fullWidth margin="normal">
-          <InputLabel id="Medium-label">Medium</InputLabel>
+          <InputLabel id="medium-label">Medium</InputLabel>
           <Select
-            labelId="Medium-label"
-            id="Medium"
-            name="Medium"
-            value={genParams.Medium}
+            labelId="medium-label"
+            id="medium"
+            name="medium"
+            value={genParams.medium}
             onChange={handleChange}
             fullWidth
           >

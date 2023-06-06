@@ -54,7 +54,7 @@ def get_job_description():
 def generate_emails():
     generate_data = request.json
     print("generate emails", generate_data)
-    emails = ruby.generate_emails(generate_data)
+    emails, message = ruby.generate_emails(generate_data)
     print(emails)
     return jsonify({'message': 'generated emails successfully'})
 

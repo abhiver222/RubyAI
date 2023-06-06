@@ -14,7 +14,9 @@ class Ruby(object):
     '''
     def generate_emails(self, data):
         print("Ruby is generating emails")
-        # get json data
+        # check if company and job description are in db
+        if not self.models.ruby_configured:
+            return None, "Configure job description and company info in Configure tab"
 
         # get data from db about company and JD
         company_data = self.models.get_company()
@@ -29,7 +31,7 @@ class Ruby(object):
         # store emails in db with generation id
         emails = self.insert_emails(emails, generation_id)
 
-        return emails
+        return emails, "sucessfully generated emails"
 
     def upsert_job(self, data):
         return self.models.upsert_job(data)
