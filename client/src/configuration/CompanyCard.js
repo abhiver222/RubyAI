@@ -9,7 +9,7 @@ const CompanyCard = () => {
     company_name: '',
     mission: '',
     motto: '',
-    brandVoice: ''
+    brand_voice: ''
   });
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const CompanyCard = () => {
             name='mission'
             label='Company Mission'
             placeholder='Enter company missions'
-            value={companyInfo['missions']}
+            value={companyInfo['mission']}
             onChange={handleChange}
             required
             multiline
