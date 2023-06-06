@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box, IconButton } from '@mui/material';
 import MagicWandIcon from '@mui/icons-material/Autorenew';  // choose an icon that suits your needs
 import {SERVER_URL} from '../utils';
@@ -12,6 +12,16 @@ const CompanyCard = () => {
     brandVoice: ''
   });
 
+  useEffect(() => {
+    const getCompanyInfo = async () => {
+      const response = await fetch(`${SERVER_URL}/get_company_info`);
+      const data = await response.json();
+      console.log("get company info",data)
+      setCompanyInfo(data.company_info);
+    };
+    getCompanyInfo();
+  }, []);
+
   const handleChange = (event) => {
     setCompanyInfo({
       ...companyInfo,
@@ -20,7 +30,7 @@ const CompanyCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`${SERVER_URL}/company_info`, {
+    const response = await fetch(`${SERVER_URL}/save_company_info`, {
       method: 'POST',
       body: JSON.stringify(companyInfo),
       headers: { 'Content-Type': 'application/json' }

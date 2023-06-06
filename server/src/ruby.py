@@ -43,6 +43,12 @@ class Ruby(object):
     def insert_emails(self, emails, generation_id):
         return self.models.insert_emails(emails, generation_id)
     
+    def get_company_info(self):
+        return self.models.get_company()
+    
+    def get_job_description(self):
+        return self.models.get_job_description()
+    
     def print_db(self, table_name):
         table = self.db.table(table_name)
         print(table.all())

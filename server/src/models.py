@@ -28,7 +28,7 @@ class Models(object):
         table.insert(data)
         return data['id']
 
-    def get_entry(self,table_name):
+    def get_single_entry(self,table_name):
         table = self.db.table(table_name)
         Entry = Query()
         result = table.search(Entry.id.exists())
@@ -63,13 +63,13 @@ class Models(object):
     for the demo, we assume only one company
     """
     def get_company(self):
-        return self.get_entry('company')
+        return self.get_single_entry('company')
     
     """
     for the demo, we assume only one job description
     """
     def get_job_description(self):
-        return self.get_entry('job')
+        return self.get_single_entry('job')
 
     def insert(self,table_name, document):
         table = self.db.table(table_name)

@@ -23,20 +23,32 @@ def print_db():
     return jsonify({'message': 'printed db successfully'})
 
 # Endpoint for storing company information
-@app.route('/company_info', methods=['POST'])
+@app.route('/save_company_info', methods=['POST'])
 def store_company_info():
     company_data = request.json
     print("upsert company info", company_data)
     id = ruby.upsert_company(company_data)
     return jsonify({'message': 'Company information stored successfully', 'company_id': id})
 
+@app.route('/get_company_info', methods=['GET'])
+def get_company_info():
+    print("getting company info")
+    info = ruby.get_company_info()
+    return jsonify({'message': 'Company info fetched successfully', 'company_info': info}), 200
+
 # Endpoint for storing job description information
-@app.route('/job_description', methods=['POST'])
+@app.route('/save_job_description', methods=['POST'])
 def store_job_description():
     job_data = request.json
     print("upsert job description", job_data)
     id = ruby.upsert_job(job_data)
     return jsonify({'message': 'Job description stored successfully', 'job_id': id})
+
+@app.route('/get_job_description', methods=['GET'])
+def get_job_description():
+    print("getting job description")
+    job_description = ruby.get_job_description()
+    return jsonify({'message': 'Job description stored successfully', 'job_description': job_description}), 200
 
 @app.route('/generate_emails', methods=['POST'])
 def generate_emails():

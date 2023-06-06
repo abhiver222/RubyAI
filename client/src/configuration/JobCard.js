@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
 import { SERVER_URL } from '../utils';
 
@@ -11,6 +11,16 @@ const JobCard = () => {
     location: ''
   });
 
+  useEffect(() => {
+    const getJobDescription = async () => {
+      const response = await fetch(`${SERVER_URL}/get_job_description`);
+      const data = await response.json();
+      console.log("get jd",data)
+      setJobDescription(data.job_description);
+    };
+    getJobDescription();
+  }, []);
+
   const handleChange = (event) => {
     setJobDescription({
       ...jobDescription,
@@ -19,7 +29,7 @@ const JobCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`${SERVER_URL}/job_description`, {
+    const response = await fetch(`${SERVER_URL}/save_job_description`, {
       method: 'POST',
       body: JSON.stringify(jobDescription),
       headers: { 'Content-Type': 'application/json' }
