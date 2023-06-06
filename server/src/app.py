@@ -6,6 +6,11 @@ app = Flask(__name__)
 db = TinyDB('database.json')
 ruby = Ruby(db)
 
+@app.route('/health', methods=['GET'])
+def health():
+    print("health check")
+    return jsonify({'message': 'Server is up and running'})
+
 # Endpoint for storing company information
 @app.route('/company_info', methods=['POST'])
 def store_company_info():
