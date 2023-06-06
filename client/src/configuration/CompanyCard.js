@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box, IconButton } from '@mui/material';
 import MagicWandIcon from '@mui/icons-material/Autorenew';  // choose an icon that suits your needs
+import {SERVER_URL} from '../utils';
 
 
 const CompanyCard = () => {
   const [companyInfo, setCompanyInfo] = useState({
-    company: '',
-    missions: '',
+    company_name: '',
+    mission: '',
     motto: '',
     brandVoice: ''
   });
@@ -19,7 +20,7 @@ const CompanyCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch('https://api.example.com/save-company-info', {
+    const response = await fetch(`${SERVER_URL}/save-company-info`, {
       method: 'POST',
       body: JSON.stringify(companyInfo),
       headers: { 'Content-Type': 'application/json' }
@@ -35,10 +36,10 @@ const CompanyCard = () => {
           Company Information
         </Typography>
         <TextField
-          name='company'
+          name='company_name'
           label='Company Name'
           placeholder='Enter company name'
-          value={companyInfo['company']}
+          value={companyInfo['company_name']}
           onChange={handleChange}
           required
           fullWidth
@@ -56,8 +57,8 @@ const CompanyCard = () => {
         />
         <Box position="relative">
           <TextField
-            name='missions'
-            label='Company Missions'
+            name='mission'
+            label='Company Mission'
             placeholder='Enter company missions'
             value={companyInfo['missions']}
             onChange={handleChange}

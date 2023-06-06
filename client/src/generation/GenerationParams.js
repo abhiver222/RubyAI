@@ -26,18 +26,6 @@ export const GenerationParamsCard = () => {
         <Typography variant="h5">
           Generation Parameters
         </Typography>
-        <Typography variant="caption">
-          Creativity
-        </Typography>
-        <Slider
-          value={genParams.creativity}
-          onChange={(event, newValue) => setGenParams({...genParams, creativity: newValue})}
-          step={0.1}
-          marks
-          min={0}
-          max={1}
-          valueLabelDisplay="auto"
-        />
         <FormControl fullWidth margin="normal">
           <InputLabel id="mood-label">Mood</InputLabel>
           <Select
@@ -113,6 +101,19 @@ export const GenerationParamsCard = () => {
             <MenuItem value="dm">Direct Message</MenuItem>
           </Select>
         </FormControl>
+        <Box sx={{ height: 16 }} />
+        <Typography variant="caption">
+          Creativity
+        </Typography>
+        <Slider
+          value={genParams.creativity}
+          onChange={(event, newValue) => setGenParams({...genParams, creativity: newValue})}
+          step={0.1}
+          marks
+          min={0}
+          max={1}
+          valueLabelDisplay="auto"
+        />
       </CardContent>
     </Card>
   );

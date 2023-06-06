@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
+import { SERVER_URL } from '../utils';
 
 const JobCard = () => {
   const [jobDescription, setJobDescription] = useState({
@@ -18,7 +19,7 @@ const JobCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch('https://api.example.com/save-job-description', {
+    const response = await fetch(`${SERVER_URL}/save-job-description`, {
       method: 'POST',
       body: JSON.stringify(jobDescription),
       headers: { 'Content-Type': 'application/json' }

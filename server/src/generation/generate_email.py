@@ -30,7 +30,7 @@ class GenerateEmail(Generate):
         # generate emails and store in DB
         emails = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations)
         # add ids for emails into emails list in generation
-        
+
 
         # return generated emails
         return emails
@@ -39,9 +39,9 @@ class GenerateEmail(Generate):
     def get_prompt(self, generation_data, company_data, job_description):
         system_prompt = f"""You are a recruiter for {company_data["company_name"]} in {generation_data['industry']} industry and 
                     are writing an email to a candidate for a {job_description['position']} position at {company_data['company_name']}. 
-                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. """
+                    The companys mission is {company_data['mission']} and its motto is {company_data['motto']}. The company's voice is {company_data['brand_voice']}."""
         
-        prompt = f"""Write a recruitment email for this job description:                    
+        prompt = f"""Write a recruitment email in the companys brand voice for this job description                   
                     position: {job_description['position']}
                     responsibilities: {job_description['responsibilities']}
                     skills: {job_description['skills']}

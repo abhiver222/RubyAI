@@ -1,8 +1,10 @@
 // Generation.js
 import React, { useState, useRef } from 'react';
-import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize } from '@mui/material';
+import { Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
@@ -24,22 +26,41 @@ export const Generation = () => {
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
       <Container maxWidth="lg">
-        <Typography variant="h4">
-          Generation
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <CandidateInfoCard />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <GenerationParamsCard />
-            <Box display="flex" justifyContent="center" m={1} p={1}>
-              <Button variant="contained" color="primary" onClick={handleGenerate} size='large' sx={{marginTop: "18px"}}>
-                Generate
-              </Button>
-            </Box>
-          </Grid>
-        </Grid>
+      <Typography variant="h3">
+      Generation
+    </Typography>
+    <Grid container spacing={2}>
+      <Grid item >
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="generation-params-content"
+            id="generation-params-header"  
+            sx={{
+                '& .MuiAccordionSummary-content': {
+                  justifyContent: 'space-between',
+                },
+              }}          
+          >
+            <Typography variant="h5" style={{marginTop: "4px"}}>Generation Parameters</Typography>
+            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}}>
+            Generate
+          </Button>         
+        </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <CandidateInfoCard />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <GenerationParamsCard />
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+
+      </Grid>
+    </Grid>
         {emails.length && (
           <Grid item xs={12}>
             <Tabs value={currentIndex} >
