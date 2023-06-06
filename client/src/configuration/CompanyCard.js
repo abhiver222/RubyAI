@@ -20,7 +20,7 @@ const CompanyCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`${SERVER_URL}/save-company-info`, {
+    const response = await fetch(`${SERVER_URL}/company_info`, {
       method: 'POST',
       body: JSON.stringify(companyInfo),
       headers: { 'Content-Type': 'application/json' }

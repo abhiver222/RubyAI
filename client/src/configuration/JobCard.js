@@ -19,7 +19,7 @@ const JobCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`${SERVER_URL}/save-job-description`, {
+    const response = await fetch(`${SERVER_URL}/job_description`, {
       method: 'POST',
       body: JSON.stringify(jobDescription),
       headers: { 'Content-Type': 'application/json' }

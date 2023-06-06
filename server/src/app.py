@@ -22,22 +22,23 @@ def print_db():
 # Endpoint for storing company information
 @app.route('/company_info', methods=['POST'])
 def store_company_info():
-    print("upsert company info")
     company_data = request.json
+    print("upsert company info", company_data)
     id = ruby.upsert_company(company_data)
     return jsonify({'message': 'Company information stored successfully', 'company_id': id})
 
 # Endpoint for storing job description information
 @app.route('/job_description', methods=['POST'])
 def store_job_description():
-    print("upsert job description")
     job_data = request.json
+    print("upsert job description", job_data)
     id = ruby.upsert_job(job_data)
     return jsonify({'message': 'Job description stored successfully', 'job_id': id})
 
 @app.route('/generate_emails', methods=['POST'])
 def generate_emails():
     generate_data = request.json
+    print("generate emails", generate_data)
     emails = ruby.generate_emails(generate_data)
     print(emails)
     return jsonify({'message': 'generated emails successfully'})
