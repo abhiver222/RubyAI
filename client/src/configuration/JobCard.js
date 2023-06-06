@@ -40,6 +40,10 @@ const JobCard = () => {
     console.log(data);
   };
 
+  const submitDisabled = () => {
+    return Object.values(jobDescription).some((value) => value === '' || !isSome(value));
+  };
+
   return (
     <Card variant="outlined" sx={{backgroundColor: '#4d4d4d'}}>
       <CardContent>
@@ -60,7 +64,7 @@ const JobCard = () => {
           />
         ))}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={submitDisabled()}>
             Save
           </Button>
         </Box>

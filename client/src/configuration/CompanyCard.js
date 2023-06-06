@@ -40,6 +40,10 @@ const CompanyCard = () => {
     const data = await response.json();
     console.log(data);
   };
+  console.log("company info", companyInfo)
+  const submitDisabled = () => {
+    return Object.values(companyInfo).some((value) => value === '' || !isSome(value));
+  };
 
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d',  boxShadow: 3 }}>
@@ -86,10 +90,10 @@ const CompanyCard = () => {
         </Box>
         <Box position="relative">
           <TextField
-            name='brandVoice'
+            name='brand_voice'
             label='Brand Voice'
             placeholder='Enter brand voice'
-            value={companyInfo['brandVoice']}
+            value={companyInfo['brand_voice']}
             onChange={handleChange}
             required
             multiline
@@ -102,7 +106,7 @@ const CompanyCard = () => {
           </IconButton>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={submitDisabled()}>
             Save
           </Button>
         </Box>
