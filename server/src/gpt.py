@@ -67,7 +67,7 @@ def get_chatgpt_completions_parallel(system_prompt, chat_prompt, initial_tempera
         futures = []
         for _ in range(num_generations):
             futures.append(executor.submit(call_api, temperature))
-            temperature = min(temperature + 0.015, 1)  # ensure temperature does not exceed 1
+            temperature = min(temperature + 0.02, 1)  # ensure temperature does not exceed 1
 
         results = [future.result() for future in concurrent.futures.as_completed(futures)]
 
