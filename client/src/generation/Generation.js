@@ -91,7 +91,7 @@ export const Generation = () => {
   const handleSendMessage = async () => {
     // get message at current selected index
     // send messageid to backend
-    const messageId = messages[currentIndex].messageId;
+    const {message_id} = messages[currentIndex]
     console.log("sending message messageId", messageId);
     try {
         const response = await fetch(`${SERVER_URL}/send_message`, {
@@ -99,7 +99,7 @@ export const Generation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message_id: messageId }),
+          body: JSON.stringify({ message_id }),
         });
         if (response.ok) {
           console.log("send email", response);
@@ -118,7 +118,7 @@ export const Generation = () => {
     // get feedback at current selected index
     // get email at current selected index
     // send feedback and messageid to backend
-    const messageId = messages[currentIndex].messageId;
+    const {message_id} = messages[currentIndex]
     const feedback = feedbacks[currentIndex];
     try {
         const response = await fetch(`${SERVER_URL}/send_message`, {
@@ -126,7 +126,7 @@ export const Generation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ message_id: messageId, feedback }),
+          body: JSON.stringify({ message_id, feedback }),
         });
         if (response.ok) {
           console.log("send feedbac", response);

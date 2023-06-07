@@ -56,7 +56,7 @@ class Models(object):
             readability = {"score": fk.score, "grade_level": fk.grade_levels, "ease": fk.ease}
             message_data = {"content": message, "generation_id": generation_id, "feedback": '', "readability": readability}
             message_id = self.insert_message(message_data)
-            inserted_messages.append({'message':message, 'id':message_id})
+            inserted_messages.append({'message':message, 'message_id':message_id})
         return inserted_messages
         
 
