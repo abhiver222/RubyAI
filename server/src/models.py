@@ -2,7 +2,7 @@ from tinydb import Query
 import uuid
 from readability import Readability
 import time
-
+import sys
 
 class Models(object):
     def __init__(self, db):
@@ -48,13 +48,13 @@ class Models(object):
     def insert_message(self,data):
         return self.insert_new_with_id('message', data)
     
-    def insert_messages(self,messages, generation_id):
+    def insert_messages(self,messages, generation_data):
         inserted_messages = []
         for message in messages:
             r = Readability(message)    
             fk = r.flesch()
             readability = {"score": fk.score, "grade_level": fk.grade_levels, "ease": fk.ease}
-            message_data = {"content": message, "generation_id": generation_id, "feedback": '', "readability": readability}
+            message_data = {"content": message, "generation_data": generation_data, "feedback": '', "readability": readability, "generated_at": time.time()}
             message_id = self.insert_message(message_data)
             inserted_messages.append({'message':message, 'message_id':message_id})
         return inserted_messages
@@ -96,6 +96,7 @@ class Models(object):
         if not feedback:
             return None
         message['feedback'] = feedback
+        print("inserting feedback", message_id, message)
         self.update_by_id('message', message_id, message)
         return message_id
     
@@ -116,3 +117,9 @@ class Models(object):
         table = self.db.table(table_name)
         Entry = Query()
         table.update(document, Entry.id == document_id)
+
+    def get_messages(self):
+        table = self.db.table('message')
+        sorted_messages = sorted(table.all(), key=lambda x: x.get('generated_at', -sys.maxsize), reverse=True)
+        return sorted_messages
+

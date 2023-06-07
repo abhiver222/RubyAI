@@ -1,5 +1,5 @@
 // Generation.js
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
@@ -104,7 +104,7 @@ export const Generation = () => {
         if (response.ok) {
           console.log("send email", response);
           const { message, messageId } = await response.json();
-          console.log("resp data", messageId, message);
+          console.log("resp data", message_id, message);
         } else {
             const {message} = await response.json()
           console.error("Unable to call server", message);
@@ -131,7 +131,7 @@ export const Generation = () => {
         if (response.ok) {
           console.log("send feedbac", response);
           const { message, messageId } = await response.json();
-          console.log("resp data", messageId, message);
+          console.log("resp data", message_id, message);
         } else {
             const {message} = await response.json()
           console.error("Unable to call server", message);
@@ -180,7 +180,7 @@ export const Generation = () => {
 
       </Grid>
     </Grid>
-        {messages.length && (
+        {isPopulated(messages) && (
             <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3, p: 2, mt: 4 }}>
           <Grid item xs={12}>
             <Tabs value={currentIndex} >

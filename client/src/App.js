@@ -7,7 +7,7 @@ import { LandingPage } from './LandingPage.js';
 // Your page components
 import {Configuration} from './configuration/Configuration';
 import {Generation} from './generation/Generation';
-import {Feedback} from './Feedback';
+import {History} from './History';
 
 const theme = createTheme({
   palette: {
@@ -35,14 +35,14 @@ function App() {
             </Typography>
             <Button color="inherit" component={Link} to="/configuration">Configure</Button>
             <Button color="inherit" component={Link} to="/generation">Generate</Button>
-            <Button color="inherit" component={Link} to="/feedback">Feedback</Button>
+            <Button color="inherit" component={Link} to="/history">History</Button>
           </Toolbar>
         </AppBar>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/configuration" element={<Configuration />} />
           <Route path="/generation" element={<Generation />} />
-          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </Router>
     </ThemeProvider>

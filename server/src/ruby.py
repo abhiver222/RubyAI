@@ -30,7 +30,7 @@ class Ruby(object):
         print("Generation id: " + generation_id)
 
         # store messages in db with generation id
-        messages = self.insert_messages(messages, generation_id)
+        messages = self.insert_messages(messages, data)
 
         return messages, "sucessfully generated messages"
 
@@ -43,8 +43,8 @@ class Ruby(object):
     def insert_generation(self, data):
         return self.models.insert_generation(data)
     
-    def insert_messages(self, messages, generation_id):
-        return self.models.insert_messages(messages, generation_id)
+    def insert_messages(self, messages,  generation_data):
+        return self.models.insert_messages(messages, generation_data)
     
     def get_company_info(self):
         return self.models.get_company()
@@ -62,3 +62,6 @@ class Ruby(object):
     
     def send_message(self, message):
         return self.models.send_message(message)
+    
+    def get_messages(self):
+        return self.models.get_messages()

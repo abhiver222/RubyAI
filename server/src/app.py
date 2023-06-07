@@ -80,5 +80,14 @@ def send_message():
         return jsonify({'message': 'Message failed to send'}), 400
     return jsonify({'message': 'Message sent successfully', 'message_id': message_id}), 200
 
+@app.route('/get_all_messages', methods=['GET'])
+def get_messages_and_feedback():
+    # get all generated messages
+    print("getting all messages")
+    messages = ruby.get_messages()
+    if not messages:
+        return jsonify({'message': 'Messages failed to fetch'}), 400
+    return jsonify({'message': 'Messages fetched', 'messages': messages}), 200
+
 if __name__ == '__main__':
     app.run()
