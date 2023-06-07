@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Box, IconButton } from '@mui/material';
-import MagicWandIcon from '@mui/icons-material/Autorenew';  // choose an icon that suits your needs
-import {SERVER_URL, isSome} from '../utils';
+import { Card, CardContent, Typography, TextField, Button, Box, IconButton, Modal, TextareaAutosize } from '@mui/material';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import {SERVER_URL, isPopulated, isSome} from '../utils';
 
 
 const CompanyCard = () => {
@@ -11,6 +11,11 @@ const CompanyCard = () => {
     motto: '',
     brand_voice: ''
   });
+
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState('');
+  const [generatedVoice, setGeneratedVoice] = useState('');
+  const [generateDisabled, setGenerateDisabled] = useState(false);
 
   useEffect(() => {
     const getCompanyInfo = async () => {
@@ -31,18 +36,49 @@ const CompanyCard = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (companyData) => {
+    console.log("calling submit", companyInfo, companyData)
     const response = await fetch(`${SERVER_URL}/save_company_info`, {
       method: 'POST',
-      body: JSON.stringify(companyInfo),
+      body: JSON.stringify(companyData),
       headers: { 'Content-Type': 'application/json' }
     });
     const data = await response.json();
     console.log(data);
   };
-  console.log("company info", companyInfo)
+  
   const submitDisabled = () => {
     return Object.values(companyInfo).some((value) => value === '' || !isSome(value));
+  };
+
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleGenerateClick = async () => {
+    setGenerateDisabled(true);
+    const response = await fetch(`${SERVER_URL}/generate_company_voice`, {
+        method: 'POST',
+        body: JSON.stringify({...companyInfo, description}),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await response.json();
+      console.log(data);
+      setGeneratedVoice(data.company_voice)
+      setGenerateDisabled(false);
+  };
+
+  const handleModalSaveClick = async () => {
+    const companyData = {...companyInfo, brand_voice: generatedVoice}
+    setCompanyInfo({
+      ...companyData
+    });
+    console.log("$$$$$$ in handle modal", companyInfo, companyData, generatedVoice)
+    setOpen(false);
+    setDescription('');
+    setGeneratedVoice('');
+    await handleSubmit(companyData);
   };
 
   return (
@@ -71,8 +107,8 @@ const CompanyCard = () => {
           fullWidth
           margin="normal"
         />
-        <Box position="relative">
-          <TextField
+        <Box position="relative" display="flex" flexDirection="column" alignItems="flex-end">          
+        <TextField
             name='mission'
             label='Company Mission'
             placeholder='Enter company missions'
@@ -85,9 +121,6 @@ const CompanyCard = () => {
             fullWidth
             margin="normal"
           />
-          <IconButton aria-label="edit" color="primary" size="small" sx={{ position: 'absolute', bottom: 10, right: 10 }}>
-            <MagicWandIcon />
-          </IconButton>
         </Box>
         <Box position="relative">
           <TextField
@@ -103,12 +136,37 @@ const CompanyCard = () => {
             fullWidth
             margin="normal"
           />
-          <IconButton aria-label="edit" color="primary" size="small" sx={{ position: 'absolute', bottom: 10, right: 10 }}>
-            <MagicWandIcon />
+          <IconButton aria-label="edit" color="primary" size="small" sx={{ position: 'absolute', bottom: 10, right: 10, paddingLeft: "10px" }} onClick={() =>setOpen(true)}>
+            <AutoFixHighIcon color='warning'/>
           </IconButton>
+          <Modal open={open} onClose={() => setOpen(false)}>
+            <Box sx={{ width: '50%', margin: 'auto', marginTop: '10%', backgroundColor: '#4a4a4a', padding: '20px' }}>
+            <Typography variant="h4" component="h2" style={{color:"white"}}>Ruby Assist</Typography>
+            <Typography variant="body1" component="p" sx={{color:"white", mt: 1}}>Ruby can generate some text for your Brand Voice</Typography>
+            <TextField
+                label="Describe a good day at work, use adjectives and verbs?"
+                value={description}
+                onChange={handleDescriptionChange}
+                fullWidth
+                sx={{mt:3}}
+            />
+            {isPopulated(generatedVoice) && 
+            <TextareaAutosize
+                minRows={2}
+                maxRows={4}
+                style={{ width: '95%', padding: 20, marginTop: '16px', overflow: 'auto' }}
+                value={generatedVoice}
+                readOnly={true}
+            />}
+            <Box sx={{ display: 'flex', justifyContent: 'right', marginTop: '20px' }}>
+                <Button variant="contained" color="warning" onClick={handleGenerateClick} sx={{mr:1.5}} disabled={generateDisabled}>{isPopulated(generatedVoice)? "Regenerate" : "Generate"}</Button>
+                <Button variant="contained"  onClick={handleModalSaveClick}>Save</Button>
+            </Box>
+            </Box>
+        </Modal>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-          <Button variant="contained" color="primary" onClick={handleSubmit} disabled={submitDisabled()}>
+          <Button variant="contained" color="primary" onClick={() => handleSubmit(companyInfo)} disabled={submitDisabled()}>
             Save
           </Button>
         </Box>

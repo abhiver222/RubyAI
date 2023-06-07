@@ -91,13 +91,17 @@ return heading + name;
                 value={message.content}
                 readOnly={true}
             />
-            {isPopulated(message.feedback) && <TextareaAutosize
-                minRows={4}
+            {isPopulated(message.feedback) &&
+            <Box sx={{mt:1}}>
+            <label style={{ color: '#fff', marginBottom: 0 }}>Feedback:</label>
+           
+            <TextareaAutosize
+                minRows={1}
                 maxRows={4}
-                style={{ width: '97%', padding: 20, marginTop: '12px', overflow: 'auto' }}
+                style={{ width: '97%', padding: 20, marginTop: '4px', overflow: 'auto' }}
                 value={message.feedback}
                 readOnly={true}
-            />}
+            />  </Box> }
             <Box sx={{ marginTop: '8px' }}>
             <Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>

@@ -65,7 +65,7 @@ def get_chatgpt_completions_parallel(system_prompt, chat_prompt, initial_tempera
         # Start with the initial temperature and increment by 0.01 with each call
         temperature = initial_temperature
         futures = []
-        for i in range(num_generations):
+        for _ in range(num_generations):
             futures.append(executor.submit(call_api, temperature))
             temperature = min(temperature + 0.015, 1)  # ensure temperature does not exceed 1
 

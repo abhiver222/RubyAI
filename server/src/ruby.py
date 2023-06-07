@@ -1,19 +1,19 @@
 from generation.generate_message import GenerateMessage
-from generation.generate_mission import GenerateMission
+from generation.generate_voice import GenerateVoice
 from models import Models
 
 class Ruby(object):
     def __init__(self, db):
         self.db = db
         self.email_generator = GenerateMessage()
-        self.mission_generator = GenerateMission()
+        self.voice_generator = GenerateVoice()
         self.models = Models(db)
 
     '''
     generation_data: {name, companyname, industry, linkedin, website, bio, creativity, num_generations, mood, length, readability, medium}
     '''
     def generate_messages(self, data):
-        print("Ruby is generating messages")
+        print("Ruby is generating messages...")
 
         # get data from db about company and JD
         company_data = self.models.get_company()
@@ -33,6 +33,11 @@ class Ruby(object):
         messages = self.insert_messages(messages, data)
 
         return messages, "sucessfully generated messages"
+    
+    def generate_company_voice(self, context):
+        print("Ruby is generating company voice...")
+        company_voice = self.voice_generator.generate(context)
+        return company_voice
 
     def upsert_job(self, data):
         return self.models.upsert_job(data)

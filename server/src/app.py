@@ -89,5 +89,14 @@ def get_messages_and_feedback():
         return jsonify({'message': 'Messages failed to fetch'}), 400
     return jsonify({'message': 'Messages fetched', 'messages': messages}), 200
 
+@app.route('/generate_company_voice', methods=['POST'])
+def generate_company_voice():
+    print("generating company voice")
+    context = request.json
+    company_voice = ruby.generate_company_voice(context)
+    if not company_voice:
+        return jsonify({'message': 'Company voice generation failed'}), 400
+    return jsonify({'message': 'Company voice generated', 'company_voice': company_voice}), 200
+
 if __name__ == '__main__':
     app.run()

@@ -8,7 +8,7 @@ export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) =>
 
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3 }}>
-      <CardContent>
+      <CardContent style={{paddingBottom: "15px"}}>
         <Typography variant="h5">
           Generation Parameters
         </Typography>
@@ -87,7 +87,23 @@ export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) =>
             <MenuItem value="dm">Direct Message</MenuItem>
           </Select>
         </FormControl>
-        <Box sx={{ height: 16 }} />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="language">Language</InputLabel>
+          <Select
+            labelId="language"
+            id="language"
+            name="language"
+            value={genParams.language}
+            onChange={handleChange}
+            fullWidth
+          >
+            <MenuItem value="english">English</MenuItem>
+            <MenuItem value="spanish">Spanish</MenuItem>
+            <MenuItem value="french">French</MenuItem>
+            <MenuItem value="hindi">Hindi</MenuItem>
+            <MenuItem value="chinese">Chinese</MenuItem>
+          </Select>
+        </FormControl>
         <Typography variant="caption">
           Creativity
         </Typography>
@@ -99,6 +115,7 @@ export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) =>
           min={0}
           max={1}
           valueLabelDisplay="auto"
+          sx={{mb:0}}
         />
       </CardContent>
     </Card>

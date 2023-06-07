@@ -1,9 +1,10 @@
 // Generation.js
 import React, { useState } from 'react';
-import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails, IconButton } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { isPopulated, isSome, SERVER_URL } from '../utils';
 
 
@@ -30,7 +31,8 @@ export const Generation = () => {
     num_generations: 1,
     length: 'short',
     readability: 'easy',
-    medium: 'email'
+    medium: 'email',
+    language: 'english',
   });
 
   const handleCandidateChange = (event) => {
@@ -121,7 +123,7 @@ export const Generation = () => {
     const {message_id} = messages[currentIndex]
     const feedback = feedbacks[currentIndex];
     try {
-        const response = await fetch(`${SERVER_URL}/send_message`, {
+        const response = await fetch(`${SERVER_URL}/submit_feedback`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -140,6 +142,13 @@ export const Generation = () => {
         console.error("Unable to call server", e);
       }
   }
+
+  const handleCopyClick = () => {
+    const {message} = messages[currentIndex];
+    if(isPopulated(message)){
+        navigator.clipboard.writeText(message);
+    }
+  };
 
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
@@ -162,7 +171,7 @@ export const Generation = () => {
               }}          
           >
             <Typography variant="h5" style={{marginTop: "4px"}}>Generation Parameters</Typography>
-            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}} disabled={generateButtonDisabled()}>
+            <Button variant="contained" color="warning" onClick={handleGenerate} size='large' style={{marginRight: "20px"}} disabled={generateButtonDisabled()}>
             Generate
           </Button>         
         </AccordionSummary>
@@ -188,12 +197,17 @@ export const Generation = () => {
                   <Tab key={index} label={`Message ${index + 1}`} onClick={() => handleTabChange(index)}/>
               ))}
             </Tabs>
-            <TextareaAutosize
-              minRows={15}
-              style={{ width: '97%', padding: 20, marginTop: '20px', paddingRight: '20px !important' }}
-              value={messages[currentIndex].message}
-              readOnly={true}
-            />
+            <Box position="relative">
+                <TextareaAutosize
+                minRows={15}
+                style={{ width: '97%',padding: 20,  marginTop: '20px'}}
+                value={messages[currentIndex].message}
+                readOnly={true}
+                />
+                <IconButton aria-label="copy" color="primary" size="small" sx={{ position: 'absolute', top: 25, right: 3 }} onClick={handleCopyClick}>
+                    <ContentCopyIcon />
+                </IconButton>
+            </Box>
             <TextareaAutosize
                 minRows={3}
                 maxRows={6}
@@ -204,7 +218,7 @@ export const Generation = () => {
                 />
             <Box display="flex" justifyContent="flex-end" m={1} p={1}>
             <Button variant="contained" color="primary" onClick={handleSubmitFeedback} disabled={!isPopulated(feedbacks[currentIndex])} sx={{ marginRight: "10px" }}>
-            Submit Feedback
+                Submit Feedback
             </Button>
             <Button variant="contained" color="primary" onClick={handleSendMessage}>
             Send Message

@@ -27,7 +27,7 @@ const field_to_label = {
             onChange={handleChange}
             required
             multiline={field === 'bio'}
-            minRows={field === 'bio' ? 2 : undefined}
+            minRows={field === 'bio' ? 3 : undefined}
             maxRows={field === 'bio' ? 4 : undefined}
             fullWidth
             margin="normal"

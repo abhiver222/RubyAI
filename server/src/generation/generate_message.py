@@ -16,7 +16,7 @@ class GenerateMessage(Generate):
     
     def generate(self, generation_data, company_data, job_description):
         # add a try catch here
-        
+
         # validate data to have all properties
         # create message generation prompt with data
         temperature = int(generation_data['creativity'])
@@ -28,9 +28,12 @@ class GenerateMessage(Generate):
         system_prompt, prompt = self.get_prompt(generation_data, company_data, job_description)
         print("system_prompt", system_prompt)
         print("prompt", prompt)
+        tokens = 1000
+        if generation_data['language'] in ['hindi', 'chinese']:
+            tokens = 2000
 
         # generate messages and store in DB
-        messages = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations)
+        messages = get_chatgpt_completions_parallel(system_prompt, prompt, temperature, num_generations, tokens)
         # add ids for messages into messages list in generation
 
 
@@ -54,10 +57,10 @@ class GenerateMessage(Generate):
                     They currently work in {generation_data['candidate_company']} industry and their website is {generation_data['company_url']}.
                     Their bio is {generation_data['bio']}.
 
-                    Write a {self.get_message_type(generation_data['length'], generation_data['medium'])} 
+                    Write a {self.get_message_type(generation_data['length'], generation_data['medium'])}.
                     in a {generation_data['mood']} mood to the candidate to get them to apply to the job. Talk about the benefits of working at {company_data["company_name"]}.
                     Make the message {generation_data['readability']} to read and use flesh kinkaid readability scores to measure.
-                    ease of reading. Only return the message no need to return the score.
+                    ease of reading. Only return the message no need to return the score. Write the message in {generation_data['language']} language.
                     """
         return (system_prompt, prompt)
 
