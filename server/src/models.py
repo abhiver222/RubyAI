@@ -105,11 +105,13 @@ class Models(object):
         if not message_id:
             return None
         message = self.get_by_id('message', message_id)
-        print("sending message", message_id, message)
+        # print("sending message", message_id, message)
         if not message:
             return None
         message['sent'] = True
         message['sent_at'] = time.time()
+        print("sending message", message_id, message)
         table = self.db.table('message')
-        table.update(message, doc_ids=[message_id])
+        Entry = Query()
+        table.update(message, Entry.id == message_id)
         return message_id
