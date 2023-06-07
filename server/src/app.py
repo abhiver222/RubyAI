@@ -65,6 +65,7 @@ def generate_messages():
 @app.route('/submit_feedback', methods=['POST'])
 def submit_feedback():
     feedback_data = request.json
+    print("submit feedback", feedback_data)
     message_id = ruby.insert_feedback(feedback_data)
     if not message_id:
         return jsonify({'message': 'Feedback failed to store'}), 400
@@ -73,6 +74,7 @@ def submit_feedback():
 @app.route('/send_message', methods=['POST'])
 def send_message():
     message_data = request.json
+    print("send message", message_data)
     message_id = ruby.send_message(message_data)
     if not message_id:
         return jsonify({'message': 'Message failed to send'}), 400
