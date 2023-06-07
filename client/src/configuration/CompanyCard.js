@@ -81,6 +81,7 @@ const CompanyCard = () => {
             required
             multiline
             minRows={2}
+            maxRows={4}
             fullWidth
             margin="normal"
           />
@@ -98,6 +99,7 @@ const CompanyCard = () => {
             required
             multiline
             minRows={2}
+            maxRows={4}
             fullWidth
             margin="normal"
           />

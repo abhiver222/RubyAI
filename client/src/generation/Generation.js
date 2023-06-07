@@ -4,7 +4,7 @@ import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosi
 import {CandidateInfoCard} from './CandidateInfo';
 import {GenerationParamsCard} from './GenerationParams';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { isSome, SERVER_URL } from '../utils';
+import { isPopulated, isSome, SERVER_URL } from '../utils';
 
 
 export const Generation = () => {
@@ -69,9 +69,9 @@ export const Generation = () => {
           console.log("gen emails", response);
           
           const { messageData,  message} = await response.json();
-          const messages = messageData.map((message) => message.message);
+        //   const messages = messageData.map((message) => message.message);
           console.log("resp data", messages, message);
-            setMessages(messages);
+            setMessages(messageData);
         } else {
             const {message} = await response.json()
           console.error("Unable to call server", message);
@@ -87,14 +87,60 @@ export const Generation = () => {
   }
 
   const handleSendEmail = async () => {
+    // get email at current selected index
+    // send messageid to backend
+    const messageId = messages[currentIndex].messageId;
+    try {
+        const response = await fetch(`${SERVER_URL}/send_message`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ messageId }),
+        });
+        if (response.ok) {
+          console.log("send email", response);
+          const { message, messageId } = await response.json();
+          console.log("resp data", messageId, message);
+        } else {
+            const {message} = await response.json()
+          console.error("Unable to call server", message);
+        }
+      } catch (e) {
+        console.error("Unable to call server", e);
+      }
   }
 
   const handleSubmitFeedback = async () => {
+    // get feedback at current selected index
+    // get email at current selected index
+    // send feedback and messageid to backend
+    const messageId = messages[currentIndex].messageId;
+    const feedback = feedbacks[currentIndex];
+    try {
+        const response = await fetch(`${SERVER_URL}/send_message`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ messageId, feedback }),
+        });
+        if (response.ok) {
+          console.log("send feedbac", response);
+          const { message, messageId } = await response.json();
+          console.log("resp data", messageId, message);
+        } else {
+            const {message} = await response.json()
+          console.error("Unable to call server", message);
+        }
+      } catch (e) {
+        console.error("Unable to call server", e);
+      }
   }
 
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
-      <Container maxWidth="lg">
+      <Container style={{width: "100%", maxWidth: "1500px"}}>
       <Typography variant="h3">
       Generation
     </Typography>
@@ -141,23 +187,24 @@ export const Generation = () => {
             </Tabs>
             <TextareaAutosize
               minRows={15}
-              style={{ width: '100%', padding: 20, marginTop: '20px' }}
-              value={messages[currentIndex]}
+              style={{ width: '97%', padding: 20, marginTop: '20px', paddingRight: '20px !important' }}
+              value={messages[currentIndex].message}
               readOnly={true}
             />
             <TextareaAutosize
                 minRows={3}
+                maxRows={6}
                 placeholder="Your feedback here..."
-                style={{ width: '100%', padding: 20, marginTop: '20px', marginBottom: '20px' }}
+                style={{ width: '97%', padding: 20, marginTop: '20px', marginBottom: '20px', marginRight: '20px', overflow:'auto' }}
                 value={feedbacks[currentIndex]}
                 onChange={(e) => handleFeedbackChange(currentIndex, e)}
                 />
             <Box display="flex" justifyContent="flex-end" m={1} p={1}>
-            <Button variant="contained" color="primary" onClick={handleSendEmail} sx={{ marginRight: "10px" }}>
-            Send Email
-            </Button>
-            <Button variant="contained" color="primary" onClick={handleSubmitFeedback}>
+            <Button variant="contained" color="primary" onClick={handleSubmitFeedback} disabled={!isPopulated(feedbacks[currentIndex])} sx={{ marginRight: "10px" }}>
             Submit Feedback
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleSendEmail}>
+            Send Email
             </Button>
       </Box>
           </Grid>

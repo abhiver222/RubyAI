@@ -58,20 +58,25 @@ def generate_messages():
     if not messageData:
         return jsonify({'message': resp_message}), 400
     print(messageData)
-    return jsonify({'message': resp_message, 'messageData': messageData})
+    medium = generate_data['medium']
+    return jsonify({'message': resp_message, 'messageData': messageData, 'medium': medium}), 200
 
 
 @app.route('/submit_feedback', methods=['POST'])
 def submit_feedback():
     feedback_data = request.json
     message_id = ruby.insert_feedback(feedback_data)
-    return jsonify({'message': 'Feedback stored successfully', 'message_id': message_id})
+    if not message_id:
+        return jsonify({'message': 'Feedback failed to store'}), 400
+    return jsonify({'message': 'Feedback stored successfully', 'message_id': message_id}), 200
 
 @app.route('/send_message', methods=['POST'])
-def submit_feedback():
+def send_message():
     message_data = request.json
     message_id = ruby.send_message(message_data)
-    return jsonify({'message': 'Message sent successfully', 'message_id': message_id})
+    if not message_id:
+        return jsonify({'message': 'Message failed to send'}), 400
+    return jsonify({'message': 'Message sent successfully', 'message_id': message_id}), 200
 
 if __name__ == '__main__':
     app.run()

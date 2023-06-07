@@ -15,6 +15,8 @@ class Generate(ABC):
 class GenerateMessage(Generate):
     
     def generate(self, generation_data, company_data, job_description):
+        # add a try catch here
+        
         # validate data to have all properties
         # create message generation prompt with data
         temperature = int(generation_data['creativity'])
