@@ -10,7 +10,7 @@ export const LandingPage = () => {
       </Box>
       <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3, width:"60%", mt: 5 }}>
         <CardContent sx={{mx:5}}>
-        <Typography variant="h5" sx={{ mb:1 }}>
+        <Typography variant="h5" sx={{ mb:1, mt:2 }}>
             Hi, I'm <span style={{color:"#FE0944", fontWeight:"bold"}}>RubyAI</span>! <br/>I can help you write personalized recruitement emails for your candidates.
           </Typography>
         <Box width="100%" sx={{mt:0}}>

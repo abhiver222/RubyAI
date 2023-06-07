@@ -6,7 +6,7 @@ import { isPopulated, SERVER_URL } from './utils';
 export const History = () => {
   const [messages, setMessages] = useState([]); // You would need to import useState from 'react'
   const [filter, setFilter] = useState("all");
-  const [filteredMessages, setFilteredMessages] = useState();
+  const [filteredMessages, setFilteredMessages] = useState([]);
 
 
   useEffect(() => {
