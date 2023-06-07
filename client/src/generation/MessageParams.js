@@ -1,6 +1,6 @@
 // GenerationParamsCard.js
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, TextField, Box, Slider, Select, MenuItem } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Box, Slider, Select, MenuItem, Tooltip } from '@mui/material';
 import { FormControl, InputLabel } from '@mui/material';
 
 export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
@@ -13,6 +13,7 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
         </Typography>
         <FormControl fullWidth margin="normal">
           <InputLabel id="mood-label">Mood</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>How the message should feel</h3>} placement='right' arrow>      
           <Select
             labelId="mood-label"
             id="mood"
@@ -25,9 +26,11 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value="casual">Casual</MenuItem>
             <MenuItem value="jovial">Jovial</MenuItem>
           </Select>
+          </Tooltip>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel id="num-generations-label">Number of Generations</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>Number of messages to generate</h3>} placement='right' arrow>      
           <Select
             labelId="num-generations-label"
             id="num_generations"
@@ -39,10 +42,11 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value={1}>1</MenuItem>
             <MenuItem value={3}>3</MenuItem>
             <MenuItem value={5}>5</MenuItem>
-          </Select>
+          </Select></Tooltip>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel id="length-label">Length</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>Length and verbosity of the message</h3>} placement='right' arrow>      
           <Select
             labelId="length-label"
             id="length"
@@ -54,10 +58,11 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value="short">Short</MenuItem>
             <MenuItem value="long">Long</MenuItem>
             <MenuItem value="verbose">Verbose</MenuItem>
-          </Select>
+          </Select></Tooltip>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel id="readability-label">Readability Level</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>Ease of reading and language used</h3>} placement='right' arrow>      
           <Select
             labelId="readability-label"
             id="readability"
@@ -70,9 +75,11 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value="medium">Medium</MenuItem>
             <MenuItem value="hard">Hard</MenuItem>
           </Select>
+          </Tooltip>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel id="medium-label">Medium</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>Medium this message will be sent on</h3>} placement='right' arrow>      
           <Select
             labelId="medium-label"
             id="medium"
@@ -84,10 +91,11 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value="email">Email</MenuItem>
             <MenuItem value="linkedin">Linkedin</MenuItem>
             <MenuItem value="dm">Direct Message</MenuItem>
-          </Select>
+          </Select></Tooltip>
         </FormControl>
         <FormControl fullWidth margin="normal">
           <InputLabel id="language">Language</InputLabel>
+          <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>Language of the message</h3>} placement='right' arrow>      
           <Select
             labelId="language"
             id="language"
@@ -102,10 +110,12 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
             <MenuItem value="hindi">Hindi</MenuItem>
             <MenuItem value="chinese">Chinese</MenuItem>
           </Select>
+          </Tooltip>
         </FormControl>
         <Typography variant="caption">
           Creativity
         </Typography>
+        <Tooltip title={<h3 style={{maxWidth: "120px", wordBreak: "break-word"}}>How creative I should be with the message</h3>} placement='right' arrow>      
         <Slider
           value={genParams.creativity}
           onChange={(event, newValue) => setGenParams({...genParams, creativity: newValue})}
@@ -116,6 +126,7 @@ export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
           valueLabelDisplay="auto"
           sx={{mb:0}}
         />
+        </Tooltip>
       </CardContent>
     </Card>
   );

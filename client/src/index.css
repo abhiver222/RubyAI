@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.loading-image {
+  width: 180px; /* Adjust the width and height as needed */
+  height: 200px;
+  background-image: url('./rubylogo.png'); /* Replace './path/to/loading.png' with the relative path to your loading image */
+  animation: morphingAnimation 2s infinite;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes morphingAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}

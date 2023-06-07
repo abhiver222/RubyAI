@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Box, IconButton, Modal, TextareaAutosize } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Box, IconButton, Modal, TextareaAutosize, Tooltip, styled } from '@mui/material';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import {SERVER_URL, isPopulated, isSome} from '../utils';
 import { toast } from "react-toastify";
@@ -84,12 +84,14 @@ const CompanyCard = () => {
     await handleSubmit(companyData);
   };
 
+
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d',  boxShadow: 3 }}>
       <CardContent>
         <Typography variant="h5">
           Company Information
         </Typography>
+        <Tooltip title={<h3 style={{maxWidth: "200px", wordBreak: "break-word"}}>Your company's name</h3>} placement='left' arrow>
         <TextField
           name='company_name'
           label='Company Name'
@@ -100,6 +102,8 @@ const CompanyCard = () => {
           fullWidth
           margin="normal"
         />
+        </Tooltip>
+        <Tooltip title={<h3 style={{maxWidth: "200px", wordBreak: "break-word"}}>Describe your motto, what you're proud of</h3>} placement='left' arrow>
         <TextField
           name='motto'
           label='Company Motto'
@@ -110,7 +114,9 @@ const CompanyCard = () => {
           fullWidth
           margin="normal"
         />
-        <Box position="relative" display="flex" flexDirection="column" alignItems="flex-end">          
+        </Tooltip>
+        <Box position="relative" display="flex" flexDirection="column" alignItems="flex-end">  
+        <Tooltip title={<h3 style={{maxWidth: "200px", wordBreak: "break-word"}}>Describe your mission, values and culture</h3>} placement='left' arrow>      
         <TextField
             name='mission'
             label='Company Mission'
@@ -123,9 +129,10 @@ const CompanyCard = () => {
             maxRows={4}
             fullWidth
             margin="normal"
-          />
+          /></Tooltip>
         </Box>
         <Box position="relative">
+        <Tooltip title={<h3 style={{maxWidth: "200px", wordBreak: "break-word"}}>What does your brand represent, <br/>I can assist here</h3>} placement='left' arrow>      
           <TextField
             name='brand_voice'
             label='Brand Voice'
@@ -138,7 +145,7 @@ const CompanyCard = () => {
             maxRows={4}
             fullWidth
             margin="normal"
-          />
+          /></Tooltip>
           <IconButton aria-label="edit" color="primary" size="small" sx={{ position: 'absolute', bottom: 10, right: 10, paddingLeft: "10px" }} onClick={() =>setOpen(true)}>
             <AutoFixHighIcon color='warning'/>
           </IconButton>

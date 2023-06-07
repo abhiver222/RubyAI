@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
+import { Card, CardContent, Typography, TextField, Button, Box, Tooltip } from '@mui/material';
 import { SERVER_URL, isSome } from '../utils';
 import { toast } from 'react-toastify';
 
@@ -46,24 +46,34 @@ const JobCard = () => {
     return Object.values(jobDescription).some((value) => value === '' || !isSome(value));
   };
 
+  const inputs = [
+    {inputName: 'position', label: 'Position', tooltip: "The title of the job you're hiring for."},
+    {inputName: 'responsibilities', label: 'Responsibilities', tooltip: "The responsibilities of the job, be descriptive."},
+    {inputName: 'skills', label: 'Skills', tooltip: "The skills a good candidate for this job should have."},
+    {inputName: 'seniority', label: 'Seniority', tooltip: "The seniority of the candidate you're looking for."},
+    {inputName: 'location', label: 'Location', tooltip: "The location of the job you're hiring for, remote, hybrid"}
+  ]
+
   return (
     <Card variant="outlined" sx={{backgroundColor: '#4d4d4d'}}>
       <CardContent>
         <Typography variant="h5">
           Job Description
         </Typography>
-        {['position', 'responsibilities', 'skills', 'seniority', 'location'].map((field) => (
+        {inputs.map((field) => (
+        <Tooltip title={<h3 style={{maxWidth: "200px", wordBreak: "break-word"}}>{field.tooltip}</h3>} placement='left' arrow>      
           <TextField
-            key={field}
-            name={field}
-            label={field.charAt(0).toUpperCase() + field.slice(1)}
-            placeholder={`Enter ${field}`}
-            value={jobDescription[field]}
+            key={field.inputName}
+            name={field.inputName}
+            label={field.label}
+            placeholder={`Enter ${field.inputName}`}
+            value={jobDescription[field.inputName]}
             onChange={handleChange}
             required
             fullWidth
             margin="normal"
           />
+          </Tooltip>
         ))}
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
           <Button variant="contained" color="primary" onClick={handleSubmit} disabled={submitDisabled()}>

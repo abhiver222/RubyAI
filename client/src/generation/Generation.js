@@ -9,7 +9,6 @@ import { isPopulated, isSome, SERVER_URL } from '../utils';
 import {toast} from 'react-toastify';
 
 export const Generation = () => {
-  const [display, setDisplay] = useState('');
   const [messages, setMessages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedbacks, setFeedbacks] = useState(Array(messages.length).fill(''));
@@ -158,16 +157,16 @@ export const Generation = () => {
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
       <Container style={{width: "100%", maxWidth: "1500px"}}>
       <Typography variant="h3">
-      Generation
+      Generate
     </Typography>
     <Box sx={{mt:1}}>
     <Typography variant="h6">
-      Tell me more about the candidate and the kind of message you want to send to generate personlaized messages.
+      Tell me more about the candidate and the kind of message you want to send to generate personalized messages.
     </Typography>
     </Box>
     <Grid container spacing={2} sx={{mt:2}}>
       <Grid item >
-        <Accordion defaultExpanded>
+        <Accordion defaultExpanded sx={{backgroundColor:'#141414'}}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             
@@ -198,6 +197,7 @@ export const Generation = () => {
 
       </Grid>
     </Grid>
+        {generateDisabled && (<Box sx={{display:"flex", justifyContent: "center", mt: 9}}><div className="loading-image" /></Box>)}
         {isPopulated(messages) && (
             <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3, p: 2, mt: 4 }}>
           <Grid item xs={12}>
