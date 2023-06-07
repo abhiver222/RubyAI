@@ -44,10 +44,10 @@ function App() {
             >
               RubyAI
             </Typography>
-            <Button color="inherit" component={Link} to="/configuration">
+            <Button color="inherit" component={Link} to="/configure">
               Configure
             </Button>
-            <Button color="inherit" component={Link} to="/generation">
+            <Button color="inherit" component={Link} to="/generate">
               Generate
             </Button>
             <Button color="inherit" component={Link} to="/history">
@@ -60,8 +60,8 @@ function App() {
         </AppBar>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/configuration" element={<Configuration />} />
-          <Route path="/generation" element={<Generation />} />
+          <Route path="/configure" element={<Configuration />} />
+          <Route path="/generate" element={<Generation />} />
           <Route path="/history" element={<History />} />
         </Routes>
       </Router>

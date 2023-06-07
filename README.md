@@ -20,10 +20,10 @@ Make sure you have npm and node setup locally
 
 ### Server
 The server is built using Python, Flask and OpenAI API. It uses a local tinydb objectDB to store metadata and state. 
-Here's a [demo APIserver](https://rubyai.onrender.com) hosted on Render.
+Here's a [demo API server](https://rubyai.onrender.com) hosted on Render.
 
 **Local setup**
-Make sure you have python and pip setup locally
+\nMake sure you have python and pip setup locally
 
 1. cd into the server directory `cd server`
 2. if you have a virtual environment setup, activate it or create a [new virtual environment](https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3)

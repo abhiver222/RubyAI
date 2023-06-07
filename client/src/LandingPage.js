@@ -6,10 +6,20 @@ import {
   ListItem,
   Card,
   CardContent,
+  Button,
 } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+
 import logo from "./rubylogo.png";
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/configure');
+  };
+
+
   return (
     <Box
       display="flex"
@@ -52,6 +62,9 @@ export const LandingPage = () => {
           </Box>
         </CardContent>
       </Card>
+      <Box sx={{ mt: 5 }}>
+      <Button variant="contained" size="large" color="warning" onClick={handleClick}>Configure</Button>
+      </Box>
     </Box>
   );
 };

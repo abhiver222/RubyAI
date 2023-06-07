@@ -50,7 +50,7 @@ const JobCard = () => {
     });
     const data = await response.json();
     console.log(data);
-    toast.info("Saved job description!");
+    toast.success("Saved job description!");
   };
 
   const submitDisabled = () => {
