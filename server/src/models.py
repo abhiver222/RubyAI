@@ -105,6 +105,7 @@ class Models(object):
         if not message_id:
             return None
         message = self.get_by_id('message', message_id)
+        print("sending message", message_id, message)
         if not message:
             return None
         message['sent'] = True

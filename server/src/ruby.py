@@ -27,6 +27,7 @@ class Ruby(object):
 
         # store generation params in db
         generation_id = self.insert_generation(data)
+        print("Generation id: " + generation_id)
 
         # store messages in db with generation id
         messages = self.insert_messages(messages, generation_id)
@@ -52,6 +53,7 @@ class Ruby(object):
         return self.models.get_job_description()
     
     def print_db(self, table_name):
+        print("Printing table: " + table_name)
         table = self.db.table(table_name)
         print(table.all())
 
