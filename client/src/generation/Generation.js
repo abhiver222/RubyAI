@@ -72,7 +72,7 @@ export const Generation = () => {
           
           const { messageData,  message} = await response.json();
         //   const messages = messageData.map((message) => message.message);
-          console.log("resp data", messages, message);
+          console.log("resp data", messageData, message);
             setMessages(messageData);
         } else {
             const {message} = await response.json()
@@ -88,10 +88,11 @@ export const Generation = () => {
     setCurrentIndex(index);
   }
 
-  const handleSendEmail = async () => {
-    // get email at current selected index
+  const handleSendMessage = async () => {
+    // get message at current selected index
     // send messageid to backend
     const messageId = messages[currentIndex].messageId;
+    console.log("sending message messageId", messageId);
     try {
         const response = await fetch(`${SERVER_URL}/send_message`, {
           method: "POST",
@@ -205,8 +206,8 @@ export const Generation = () => {
             <Button variant="contained" color="primary" onClick={handleSubmitFeedback} disabled={!isPopulated(feedbacks[currentIndex])} sx={{ marginRight: "10px" }}>
             Submit Feedback
             </Button>
-            <Button variant="contained" color="primary" onClick={handleSendEmail}>
-            Send Email
+            <Button variant="contained" color="primary" onClick={handleSendMessage}>
+            Send Message
             </Button>
       </Box>
           </Grid>
