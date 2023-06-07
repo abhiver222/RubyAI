@@ -92,7 +92,7 @@ export const Generation = () => {
     // get message at current selected index
     // send messageid to backend
     const {message_id} = messages[currentIndex]
-    console.log("sending message messageId", messageId);
+    console.log("sending message messageId", message_id);
     try {
         const response = await fetch(`${SERVER_URL}/send_message`, {
           method: "POST",
