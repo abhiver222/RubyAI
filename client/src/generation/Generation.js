@@ -9,9 +9,10 @@ import { isPopulated, isSome, SERVER_URL } from '../utils';
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
-  const [messages, setMessages] = useState(["hello","world","test"]);
+  const [messages, setMessages] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedbacks, setFeedbacks] = useState(Array(messages.length).fill(''));
+  const [generateDisabled, setGenerateDisabled] = useState(false);
 
 
   const [candidateInfo, setCandidateInfo] = useState({
@@ -52,12 +53,13 @@ export const Generation = () => {
     setFeedbacks(newFeedbacks);
   }
 
-  const generateDisabled = () =>{
-    return Object.values(candidateInfo).some((value) => value === '' || !isSome(value)) || Object.values(genParams).some((value) => value === '' || !isSome(value)) 
+  const generateButtonDisabled = () =>{
+    return generateDisabled || Object.values(candidateInfo).some((value) => value === '' || !isSome(value)) || Object.values(genParams).some((value) => value === '' || !isSome(value)) 
   }
 
   const handleGenerate = async () => {
     try {
+        setGenerateDisabled(true);
         const response = await fetch(`${SERVER_URL}/generate_messages`, {
           method: "POST",
           headers: {
@@ -79,7 +81,7 @@ export const Generation = () => {
       } catch (e) {
         console.error("Unable to call server", e);
       }
-
+      setGenerateDisabled(false);
   }
 
   const handleTabChange = (index) => {
@@ -96,7 +98,7 @@ export const Generation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messageId }),
+          body: JSON.stringify({ message_id: messageId }),
         });
         if (response.ok) {
           console.log("send email", response);
@@ -123,7 +125,7 @@ export const Generation = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messageId, feedback }),
+          body: JSON.stringify({ message_id: messageId, feedback }),
         });
         if (response.ok) {
           console.log("send feedbac", response);
@@ -159,7 +161,7 @@ export const Generation = () => {
               }}          
           >
             <Typography variant="h5" style={{marginTop: "4px"}}>Generation Parameters</Typography>
-            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}} disabled={generateDisabled()}>
+            <Button variant="contained" color="primary" onClick={handleGenerate} size='large' style={{marginRight: "20px"}} disabled={generateButtonDisabled()}>
             Generate
           </Button>         
         </AccordionSummary>
