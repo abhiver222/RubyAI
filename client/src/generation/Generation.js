@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { Card,Container, Grid, Button, Box,Tab, Tabs, Typography, TextareaAutosize, Accordion, AccordionSummary, AccordionDetails, IconButton } from '@mui/material';
 import {CandidateInfoCard} from './CandidateInfo';
-import {GenerationParamsCard} from './GenerationParams';
+import {MessageParamsCard} from './MessageParams';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { isPopulated, isSome, SERVER_URL } from '../utils';
-
+import {toast} from 'react-toastify';
 
 export const Generation = () => {
   const [display, setDisplay] = useState('');
@@ -62,6 +62,7 @@ export const Generation = () => {
   const handleGenerate = async () => {
     try {
         setGenerateDisabled(true);
+        toast.info("Generating messages...", {autoClose: 5000});
         const response = await fetch(`${SERVER_URL}/generate_messages`, {
           method: "POST",
           headers: {
@@ -95,7 +96,7 @@ export const Generation = () => {
     // send messageid to backend
     const {message_id} = messages[currentIndex]
     console.log("sending message messageId", message_id);
-    try {
+    try {        
         const response = await fetch(`${SERVER_URL}/send_message`, {
           method: "POST",
           headers: {
@@ -104,6 +105,7 @@ export const Generation = () => {
           body: JSON.stringify({ message_id }),
         });
         if (response.ok) {
+          toast.success("Message sent!");
           console.log("send email", response);
           const { message, messageId } = await response.json();
           console.log("resp data", message_id, message);
@@ -131,7 +133,8 @@ export const Generation = () => {
           body: JSON.stringify({ message_id, feedback }),
         });
         if (response.ok) {
-          console.log("send feedbac", response);
+          console.log("send feedback", response);
+          toast.success("Feedback submitted!");
           const { message, messageId } = await response.json();
           console.log("resp data", message_id, message);
         } else {
@@ -147,6 +150,7 @@ export const Generation = () => {
     const {message} = messages[currentIndex];
     if(isPopulated(message)){
         navigator.clipboard.writeText(message);
+        toast.success("Copied to clipboard!");
     }
   };
 
@@ -156,7 +160,12 @@ export const Generation = () => {
       <Typography variant="h3">
       Generation
     </Typography>
-    <Grid container spacing={2}>
+    <Box sx={{mt:1}}>
+    <Typography variant="h6">
+      Tell me more about the candidate and the kind of message you want to send to generate personlaized messages.
+    </Typography>
+    </Box>
+    <Grid container spacing={2} sx={{mt:2}}>
       <Grid item >
         <Accordion defaultExpanded>
           <AccordionSummary
@@ -181,7 +190,7 @@ export const Generation = () => {
                 <CandidateInfoCard candidateInfo={candidateInfo} handleChange={handleCandidateChange}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <GenerationParamsCard genParams={genParams} handleChange={handleGenParamsChange} setGenParams={setGenParams}/>
+                <MessageParamsCard genParams={genParams} handleChange={handleGenParamsChange} setGenParams={setGenParams}/>
               </Grid>
             </Grid>
           </AccordionDetails>

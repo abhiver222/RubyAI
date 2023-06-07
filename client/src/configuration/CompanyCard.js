@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box, IconButton, Modal, TextareaAutosize } from '@mui/material';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 import {SERVER_URL, isPopulated, isSome} from '../utils';
+import { toast } from "react-toastify";
 
 
 const CompanyCard = () => {
@@ -45,6 +46,7 @@ const CompanyCard = () => {
     });
     const data = await response.json();
     console.log(data);
+    toast.success("Company information saved successfully!");
   };
   
   const submitDisabled = () => {
@@ -58,6 +60,7 @@ const CompanyCard = () => {
 
   const handleGenerateClick = async () => {
     setGenerateDisabled(true);
+    toast.info("Generating company voice...", {autoClose: 5000});
     const response = await fetch(`${SERVER_URL}/generate_company_voice`, {
         method: 'POST',
         body: JSON.stringify({...companyInfo, description}),

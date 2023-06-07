@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, TextField, Box, Slider, Select, MenuItem } from '@mui/material';
 import { FormControl, InputLabel } from '@mui/material';
 
-export const GenerationParamsCard = ({genParams, handleChange, setGenParams}) => {
-
+export const MessageParamsCard = ({genParams, handleChange, setGenParams}) => {
 
   return (
     <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3 }}>

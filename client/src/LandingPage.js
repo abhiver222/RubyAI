@@ -1,28 +1,33 @@
 import React from 'react';
-import { Box, Typography, List, ListItem } from '@mui/material';
+import { Box, Typography, List, ListItem, Card, CardContent } from '@mui/material';
+import logo from "./rubylogo.png"
 
 export const LandingPage = () => {
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
-      <Box width="50%" textAlign="center">
-        <img src="logo_url_here" alt="Ruby logo" style={{ width: '100%' }} />  {/* replace with your logo URL */}
-        <Typography variant="h4" style={{ margin: '2rem 0' }}>
-          Welcome to RubyAI
-        </Typography>
+    <Box display="flex" flexDirection="column" alignItems="center" height="100vh" sx={{mt:8}}>
+      <Box width="50%" textAlign="center" >
+        <img src={logo} alt="Ruby logo" style={{ width: '100%' }} />  {/* replace with your logo URL */}        
       </Box>
-      <Box width="60%">
-        <List>
-          <ListItem>
-            1. Click on the "Configuration" to set your preferences.
-          </ListItem>
-          <ListItem>
-            2. Go to the "Generation" page to start generating content.
-          </ListItem>
-          <ListItem>
-            3. Leave us feedback on the "Feedback" page.
-          </ListItem>
-        </List>
-      </Box>
+      <Card variant="outlined" sx={{ backgroundColor: '#4d4d4d', boxShadow: 3, width:"60%", mt: 5 }}>
+        <CardContent sx={{mx:5}}>
+        <Typography variant="h5" sx={{ mb:1 }}>
+            Hi, I'm <span style={{color:"#FE0944", fontWeight:"bold"}}>RubyAI</span>! <br/>I can help you write personalized recruitement emails for your candidates.
+          </Typography>
+        <Box width="100%" sx={{mt:0}}>
+          <List>
+            <ListItem>
+              1. First, click on the "Configure" tab to let me know about your company and the job description you're hiring for.
+            </ListItem>
+            <ListItem>
+              2. Next, go to the "Generate" page to start generating personalized messages. Leave feedback for me on messages to improve my performance! 
+            </ListItem>
+            <ListItem>
+              3. Revisit any message generations or feedback in the "History" tab.
+            </ListItem>
+          </List>
+        </Box>
+        </CardContent>
+      </Card>
     </Box>
   );
 };

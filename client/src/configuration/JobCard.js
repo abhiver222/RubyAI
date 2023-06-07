@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, TextField, Button, Box } from '@mui/material';
 import { SERVER_URL, isSome } from '../utils';
+import { toast } from 'react-toastify';
 
 const JobCard = () => {
   const [jobDescription, setJobDescription] = useState({
@@ -38,6 +39,7 @@ const JobCard = () => {
     });
     const data = await response.json();
     console.log(data);
+    toast.info("Saved job description!");
   };
 
   const submitDisabled = () => {

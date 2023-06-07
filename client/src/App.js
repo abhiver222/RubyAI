@@ -8,6 +8,7 @@ import { LandingPage } from './LandingPage.js';
 import {Configuration} from './configuration/Configuration';
 import {Generation} from './generation/Generation';
 import {History} from './History';
+import {ToastContainer} from 'react-toastify';
 
 const theme = createTheme({
   palette: {
@@ -30,12 +31,13 @@ function App() {
       <Router>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" style={{ flexGrow: 1 }} component={Link} to="/">
+            <Typography variant="h4" style={{ flexGrow: 1, textDecoration: "none", fontWeight:"bold", color:"#FE0944" }} component={Link} to="/">
               RubyAI
             </Typography>
             <Button color="inherit" component={Link} to="/configuration">Configure</Button>
             <Button color="inherit" component={Link} to="/generation">Generate</Button>
             <Button color="inherit" component={Link} to="/history">History</Button>
+            <Button color="inherit" component={Link} to="/">Help</Button>
           </Toolbar>
         </AppBar>
         <Routes>
@@ -45,6 +47,7 @@ function App() {
           <Route path="/history" element={<History />} />
         </Routes>
       </Router>
+      <ToastContainer position="bottom-right" autoClose={1000} theme="dark" />
     </ThemeProvider>
   );
 }

@@ -63,8 +63,8 @@ return heading + name;
   return (
     <Box sx={{ backgroundColor: '#808080', minHeight: '100vh', p: 3 }}>
       <Box display="flex" justifyContent="space-between">
-        <Typography variant="h4">History</Typography>
-        <Box sx={{mb:1}}>
+        <Typography variant="h4" sx={{mb:3}}>History</Typography>
+        <Box sx={{mb:1, mr:0.5}}>
         <FormControl>
           <InputLabel id="filter-label">Filter</InputLabel>
           <Select
