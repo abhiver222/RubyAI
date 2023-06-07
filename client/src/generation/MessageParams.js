@@ -180,7 +180,7 @@ export const MessageParamsCard = ({
         <Tooltip
           title={
             <h3 style={{ maxWidth: "120px", wordBreak: "break-word" }}>
-              How creative I should be with the message
+              How creative Ruby should be with the message
             </h3>
           }
           placement="right"
