@@ -96,8 +96,7 @@ class Models(object):
         if not feedback:
             return None
         message['feedback'] = feedback
-        table = self.db.table('message')
-        table.update(message, doc_ids=[message_id])
+        self.update_by_id('message', message_id, message)
         return message_id
     
     def send_message(self, message_data):
@@ -105,13 +104,15 @@ class Models(object):
         if not message_id:
             return None
         message = self.get_by_id('message', message_id)
-        # print("sending message", message_id, message)
         if not message:
             return None
         message['sent'] = True
         message['sent_at'] = time.time()
         print("sending message", message_id, message)
-        table = self.db.table('message')
-        Entry = Query()
-        table.update(message, Entry.id == message_id)
+        self.update_by_id('message', message_id, message)
         return message_id
+    
+    def update_by_id(self, table_name, document_id, document):
+        table = self.db.table(table_name)
+        Entry = Query()
+        table.update(document, Entry.id == document_id)
