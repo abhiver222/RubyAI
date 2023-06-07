@@ -9,44 +9,7 @@ import { isPopulated, isSome, SERVER_URL } from '../utils';
 import {toast} from 'react-toastify';
 
 export const Generation = () => {
-  const [messages, setMessages] = useState([
-    {
-        "message": "Hi Jason,\n\nWe hope this message finds you well. We came across your profile on LinkedIn and were impressed by your extensive experience in the software and internet industry. We believe that you would be a great fit for our Senior Engineer position at abc.com.\n\nAt abc.com, we are on a mission to change the world. Our motto is \"we are the best\" and we truly believe that. We are looking for someone who shares our passion for innovation and making a difference in the world.\n\nAs a Senior Engineer, you would be responsible for coding websites frontend and backends using typescript with node and react js with a graphql api. You would also work closely with our product and design teams to ensure that our products are top-notch.\n\nYour skills in node, react, postgres, graphql, typescript, and javascript make you an ideal candidate for this position. We are looking for someone with seniority of over 6 years, and we believe that your experience at Google would be a great asset to our team.\n\nWe offer a flexible work environment with the option to work remotely or in our San Francisco office. Our dedicated employees foster a culture of collaboration and problem-solving every day. We believe that work should be more than just a job, it should be an opportunity to connect with others, innovate, and make a difference in the world.\n\nWe would love for you to apply for this position and join our team at abc.com. If you have any questions or would like to learn more about our company, please don't hesitate to reach out.\n\nBest regards,\n\nThe abc.com Recruitment Team",
-        "message_id": "d89f8bf9-11f4-4a77-b1c4-dcf5016b5d35",
-        "readability": {
-            "ease": "standard",
-            "grade_level": [
-                "8",
-                "9"
-            ],
-            "score": 63.652336956521765
-        }
-    },
-    {
-        "message": "Hi Jason,\n\nWe hope this message finds you well. We came across your profile on LinkedIn and were impressed by your extensive experience in the industry. We believe that you would be a great fit for our Senior Engineer position at abc.com.\n\nAt abc.com, we are on a mission to change the world. Our motto is \"we are the best\" and we truly believe that. We are looking for someone who shares our passion for innovation and making a difference in the world.\n\nAs a Senior Engineer, you would be responsible for coding websites frontend and backends using typescript with node and react js with a graphql api. You would also work closely with our product and design teams to ensure that our products are top-notch.\n\nYour skills in node, react, postgres, graphql, typescript, and javascript make you an ideal candidate for this position. We are looking for someone with seniority of over 6 years, and we believe that your experience at Google would be a great asset to our team.\n\nWe offer a flexible work environment with the option to work remotely or in our San Francisco office. Our dedicated employees foster a culture of collaboration and problem-solving every day. We believe that work should be more than just a job, it should be an opportunity to connect with others, innovate, and make a difference in the world.\n\nWe would love for you to apply for this position and join our team at abc.com. If you have any questions or would like to learn more about the position, please don't hesitate to reach out.\n\nBest regards,\n\nThe abc.com Recruitment Team",
-        "message_id": "1630fbed-dd11-4ca3-a0d6-8dc495112e25",
-        "readability": {
-            "ease": "standard",
-            "grade_level": [
-                "8",
-                "9"
-            ],
-            "score": 64.32095810439563
-        }
-    },
-    {
-        "message": "Hi Jason,\n\nWe hope this message finds you well. We came across your profile on LinkedIn and were impressed by your extensive experience in the industry. We believe that you would be a great fit for our Senior Engineer position at abc.com.\n\nAt abc.com, we are on a mission to change the world. Our motto is \"we are the best\" and we truly believe that. We are looking for someone who shares our passion for innovation and making a difference in the world.\n\nAs a Senior Engineer, you would be responsible for coding websites frontend and backends using typescript with node and react js with a graphql api. You would also work closely with our product and design teams to ensure that our products are top-notch.\n\nYour skills in node, react, postgres, graphql, typescript, and javascript make you an ideal candidate for this position. We are looking for someone with seniority of over 6 years, and we believe that your experience at Google would be a great asset to our team.\n\nWe offer a flexible work environment with the option to work remotely or in our San Francisco office. Our dedicated employees foster a culture of collaboration and problem-solving every day. We believe that work should be more than just a job, it should be an opportunity to connect with others, innovate, and make a difference in the world.\n\nWe would love for you to apply for this position and join our team at abc.com. If you have any questions or would like to learn more about the position, please don't hesitate to reach out.\n\nBest regards,\n\nThe abc.com Recruitment Team",
-        "message_id": "2afed79b-326b-45ab-86f6-d1f951e18717",
-        "readability": {
-            "ease": "standard",
-            "grade_level": [
-                "8",
-                "9"
-            ],
-            "score": 64.32095810439563
-        }
-    }
-]);
+  const [messages, setMessages] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedbacks, setFeedbacks] = useState(Array(messages.length).fill(''));
@@ -99,7 +62,7 @@ export const Generation = () => {
   const handleGenerate = async () => {
     try {
         setGenerateDisabled(true);
-        toast.info("Generating messages...", {autoClose: 5000});
+        toast.info("Generating messages, this might take a few seconds...", {autoClose: 5000});
         const response = await fetch(`${SERVER_URL}/generate_messages`, {
           method: "POST",
           headers: {

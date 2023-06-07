@@ -17,9 +17,6 @@ code {
   height: 200px;
   background-image: url('./rubylogo.png'); /* Replace './path/to/loading.png' with the relative path to your loading image */
   animation: morphingAnimation 2s infinite;
-  align-items: center;
-  display: flex;
-  justify-content: center;
 }
 
 @keyframes morphingAnimation {
