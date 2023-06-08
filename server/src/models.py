@@ -8,6 +8,21 @@ class Models(object):
     def __init__(self, db):
         self.db = db
 
+    def insert(self,table_name, document):
+        table = self.db.table(table_name)
+        table.insert(document)
+
+    def get_by_id(self,table_name, document_id):
+        table = self.db.table(table_name)
+        User = Query()
+        result = table.search(User.id == document_id)
+        return result[0] if result else None
+    
+    def update_by_id(self, table_name, document_id, document):
+        table = self.db.table(table_name)
+        Entry = Query()
+        table.update(document, Entry.id == document_id)
+
     """
     maintains a single entry in the table
     """
@@ -75,16 +90,6 @@ class Models(object):
     def ruby_configured(self):
         return self.get_company() is not None and self.get_job_description() is not None
 
-    def insert(self,table_name, document):
-        table = self.db.table(table_name)
-        table.insert(document)
-
-    def get_by_id(self,table_name, document_id):
-        table = self.db.table(table_name)
-        User = Query()
-        result = table.search(User.id == document_id)
-        return result[0] if result else None
-
     def insert_feedback(self, feedback_data):
         message_id = feedback_data['message_id']
         if not message_id:
@@ -112,11 +117,6 @@ class Models(object):
         print("sending message", message_id, message)
         self.update_by_id('message', message_id, message)
         return message_id
-    
-    def update_by_id(self, table_name, document_id, document):
-        table = self.db.table(table_name)
-        Entry = Query()
-        table.update(document, Entry.id == document_id)
 
     def get_messages(self):
         table = self.db.table('message')

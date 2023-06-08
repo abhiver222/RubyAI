@@ -1,17 +1,8 @@
 
-from abc import ABC, abstractmethod
 from gpt import get_chatgpt_completion
 
-class Generate(ABC):
-    @abstractmethod
-    def generate(self):
-        pass
-    
-    @abstractmethod
-    def get_prompt(self, prompt, context):
-        pass
 
-class GenerateVoice(Generate):
+class GenerateVoice(object):
     def generate(self, context):
         prompt = self.get_prompt(context)
         system_prompt = self.get_system_prompt()

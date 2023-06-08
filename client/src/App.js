@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { LandingPage } from "./LandingPage.js";
-// Your page components
 import { Configuration } from "./configuration/Configuration";
 import { Generation } from "./generation/Generation";
 import { History } from "./History";
@@ -12,12 +11,12 @@ import { ToastContainer } from "react-toastify";
 
 const theme = createTheme({
   palette: {
-    mode: "dark", // This is for dark theme
+    mode: "dark",
     primary: {
-      main: "#90caf9", // Change as per requirement
+      main: "#90caf9",
     },
     secondary: {
-      main: "#4d4d4d", // Change as per requirement
+      main: "#4d4d4d",
     },
     background: {
       default: "#121212",

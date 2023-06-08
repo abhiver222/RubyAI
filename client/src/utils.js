@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
 
-// export const SERVER_URL = "https://rubyai.onrender.com"
 export const SERVER_URL =
   process.env.NODE_ENV === "production"
     ? "https://rubyai.onrender.com"

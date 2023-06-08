@@ -126,8 +126,8 @@ export const MessageDisplayCard = ({ messages }) => {
                 title={
                   <h3>
                     Readability score is based on the Flesch-Kincaid Grade Level
-                    formula. The higher the score, the easier the text is to
-                    read.
+                    formula and is between 1 and 100. The higher the score, the
+                    easier the text is to read.
                   </h3>
                 }
                 placement="top"
@@ -138,14 +138,26 @@ export const MessageDisplayCard = ({ messages }) => {
                   ].readability.score.toFixed(2)}`}
                 />
               </Tooltip>
-              <Chip
-                label={`Ease of reading:  ${messages[currentIndex].readability.ease}`}
-              />
-              <Chip
-                label={`Grade Levels: ${messages[
-                  currentIndex
-                ].readability.grade_level.join(", ")}`}
-              />
+              <Tooltip
+                title={<h3>How easy is it to read this message</h3>}
+                placement="top"
+              >
+                <Chip
+                  label={`Ease of reading:  ${messages[currentIndex].readability.ease}`}
+                />
+              </Tooltip>
+              <Tooltip
+                title={
+                  <h3>Grade levels which would find this text easy to read</h3>
+                }
+                placement="top"
+              >
+                <Chip
+                  label={`Grade Levels: ${messages[
+                    currentIndex
+                  ].readability.grade_level.join(", ")}`}
+                />
+              </Tooltip>
             </Box>
           )}
           <Box>

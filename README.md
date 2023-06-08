@@ -24,10 +24,11 @@ The server is built using Python, Flask and OpenAI API. It uses a local tinydb o
 Here's a [demo API server](https://rubyai.onrender.com) hosted on Render.
 
 **Local setup**\
-Make sure you have python and pip setup locally
+Make sure you have python and pip setup locally. The server uses openAI API to generate messages.
 
 1. cd into the server directory `cd server`
 2. if you have a virtual environment setup, activate it or create a [new virtual environment](https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3)
 3. run `pip install -r requirements.txt` to install package dependencies (or pip3 depending on your setup)
-4. start the server using `gunicorn wsgi:app --timeout 120`
-5. call API endpoints on `http://127.0.0.1:8000`
+4. export your openAI API key into the environment, `export OPENAI_API_KEY=<key>`
+5. start the server using `gunicorn wsgi:app --timeout 120`
+6. call API endpoints on `http://127.0.0.1:8000`

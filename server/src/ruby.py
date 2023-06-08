@@ -10,7 +10,7 @@ class Ruby(object):
         self.models = Models(db)
 
     '''
-    generation_data: {name, companyname, industry, linkedin, website, bio, creativity, num_generations, mood, length, readability, medium}
+    generation_data: {name, companyname, industry, linkedin, website, bio, creativity, num_generations, mood, length, readability, medium, language}
     '''
     def generate_messages(self, data):
         print("Ruby is generating messages...")

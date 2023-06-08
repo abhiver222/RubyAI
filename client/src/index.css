@@ -14,8 +14,8 @@ code {
 
 .loading-image {
   width: 180px; /* Adjust the width and height as needed */
-  height: 200px;
-  background-image: url('./rubylogo.png'); /* Replace './path/to/loading.png' with the relative path to your loading image */
+  height: 00px;
+  background-image: url('./assets/rubylogo.png'); /* Replace './path/to/loading.png' with the relative path to your loading image */
   animation: morphingAnimation 2s infinite;
 }
 

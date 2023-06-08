@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import logo from "./rubylogo.png";
+import logo from "./assets/rubylogo.png";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
