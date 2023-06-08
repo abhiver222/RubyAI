@@ -26,7 +26,6 @@ export const History = () => {
       try {
         const response = await fetch(`${SERVER_URL}/get_all_messages`);
         const data = await response.json();
-        console.log("messages: ", data);
         setMessages(data.messages);
       } catch (error) {
         // Handle any error that occurs during the fetch request
@@ -38,7 +37,7 @@ export const History = () => {
   }, []);
 
   useEffect(() => {
-    if(!isPopulated(messages)) return;
+    if (!isPopulated(messages)) return;
     setFilteredMessages(
       messages.filter((message) => {
         if (filter === "with_feedback") {
@@ -66,7 +65,6 @@ export const History = () => {
         break;
       default:
         heading = "";
-        console.log("heading: ", medium, name, heading);
     }
     return heading + name;
   };
@@ -158,10 +156,14 @@ export const History = () => {
                 </Box>
               </Card>
             </Box>
-          ))) : 
-          <Box sx={{display:"flex", justifyContent:"center", mt:12}}>
-            <Typography variant="h5" sx={{ mb: 3 }}>No messages generated</Typography>
-          </Box>}
+          ))
+        ) : (
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 12 }}>
+            <Typography variant="h5" sx={{ mb: 3 }}>
+              No messages generated
+            </Typography>
+          </Box>
+        )}
       </Container>
     </Box>
   );

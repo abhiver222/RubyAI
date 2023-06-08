@@ -8,8 +8,7 @@ import {
   Box,
   Tooltip,
 } from "@mui/material";
-import { SERVER_URL, isSome } from "../utils";
-import { toast } from "react-toastify";
+import { SERVER_URL, isSome, sendPostRequest } from "../utils";
 
 const JobCard = () => {
   const [jobDescription, setJobDescription] = useState({
@@ -24,7 +23,6 @@ const JobCard = () => {
     const getJobDescription = async () => {
       const response = await fetch(`${SERVER_URL}/get_job_description`);
       const data = await response.json();
-      console.log("get jd", data);
       if (isSome(data.job_description)) {
         setJobDescription((prevState) => ({
           ...prevState,
@@ -43,14 +41,12 @@ const JobCard = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch(`${SERVER_URL}/save_job_description`, {
-      method: "POST",
-      body: JSON.stringify(jobDescription),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await response.json();
-    console.log(data);
-    toast.success("Saved job description!");
+    await sendPostRequest(
+      `${SERVER_URL}/save_job_description`,
+      jobDescription,
+      "Job description saved successfully!",
+      "Unable to save job description"
+    );
   };
 
   const submitDisabled = () => {

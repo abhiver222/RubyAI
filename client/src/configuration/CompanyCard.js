@@ -10,10 +10,9 @@ import {
   Modal,
   TextareaAutosize,
   Tooltip,
-  styled,
 } from "@mui/material";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { SERVER_URL, isPopulated, isSome } from "../utils";
+import { SERVER_URL, isPopulated, isSome, sendPostRequest } from "../utils";
 import { toast } from "react-toastify";
 
 const CompanyCard = () => {
@@ -33,7 +32,6 @@ const CompanyCard = () => {
     const getCompanyInfo = async () => {
       const response = await fetch(`${SERVER_URL}/get_company_info`);
       const data = await response.json();
-      console.log("get company info", data);
       if (isSome(data.company_info)) {
         setCompanyInfo((prevState) => ({ ...prevState, ...data.company_info }));
       }
@@ -49,15 +47,12 @@ const CompanyCard = () => {
   };
 
   const handleSubmit = async (companyData) => {
-    console.log("calling submit", companyInfo, companyData);
-    const response = await fetch(`${SERVER_URL}/save_company_info`, {
-      method: "POST",
-      body: JSON.stringify(companyData),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await response.json();
-    console.log(data);
-    toast.success("Company information saved successfully!");
+    await sendPostRequest(
+      `${SERVER_URL}/save_company_info`,
+      companyData,
+      "Company information saved successfully!",
+      "Unable to save company information"
+    );
   };
 
   const submitDisabled = () => {
@@ -79,7 +74,6 @@ const CompanyCard = () => {
       headers: { "Content-Type": "application/json" },
     });
     const data = await response.json();
-    console.log(data);
     setGeneratedVoice(data.company_voice);
     setGenerateDisabled(false);
   };
@@ -89,12 +83,6 @@ const CompanyCard = () => {
     setCompanyInfo({
       ...companyData,
     });
-    console.log(
-      "$$$$$$ in handle modal",
-      companyInfo,
-      companyData,
-      generatedVoice
-    );
     setOpen(false);
     setDescription("");
     setGeneratedVoice("");

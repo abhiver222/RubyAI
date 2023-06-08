@@ -1,4 +1,3 @@
-// Generation.js
 import React, { useState } from "react";
 import {
   Card,
@@ -21,7 +20,7 @@ import { CandidateInfoCard } from "./CandidateInfo";
 import { MessageParamsCard } from "./MessageParams";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { isPopulated, isSome, SERVER_URL } from "../utils";
+import { isPopulated, isSome, SERVER_URL, sendPostRequest } from "../utils";
 import { toast } from "react-toastify";
 
 export const Generation = () => {
@@ -70,6 +69,10 @@ export const Generation = () => {
     setFeedbacks(newFeedbacks);
   };
 
+  const handleTabChange = (index) => {
+    setCurrentIndex(index);
+  };
+
   const generateButtonDisabled = () => {
     return (
       generateDisabled ||
@@ -81,65 +84,33 @@ export const Generation = () => {
   };
 
   const handleGenerate = async () => {
-    try {
-      setGenerateDisabled(true);
-      setMessages([]);
-      toast.info("Generating messages, this might take a few seconds...", {
-        autoClose: 5000,
-      });
-      const response = await fetch(`${SERVER_URL}/generate_messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...candidateInfo, ...genParams }),
-      });
-      if (response.ok) {
-        console.log("gen emails", response);
-
-        const { messageData, message } = await response.json();
-        //   const messages = messageData.map((message) => message.message);
-        console.log("resp data", messageData, message);
-        setMessages(messageData);
-      } else {
-        const { message } = await response.json();
-        console.error("Unable to call server", message);
-      }
-    } catch (e) {
-      console.error("Unable to call server", e);
+    setGenerateDisabled(true);
+    setMessages([]);
+    toast.info("Generating messages, this might take a few seconds...", {
+      autoClose: 5000,
+    });
+    const { messageData } = await sendPostRequest(
+      `${SERVER_URL}/generate_messages`,
+      { ...candidateInfo, ...genParams },
+      "Messages generated!",
+      "Unable to generate messages"
+    );
+    if (isSome(messageData)) {
+      setMessages(messageData);
     }
     setGenerateDisabled(false);
   };
 
-  const handleTabChange = (index) => {
-    setCurrentIndex(index);
-  };
-
   const handleSendMessage = async () => {
     // get message at current selected index
-    // send messageid to backend
+    // send messageid to backend to send
     const { message_id } = messages[currentIndex];
-    console.log("sending message messageId", message_id);
-    try {
-      const response = await fetch(`${SERVER_URL}/send_message`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message_id }),
-      });
-      if (response.ok) {
-        toast.success("Message sent!");
-        console.log("send email", response);
-        const { message, messageId } = await response.json();
-        console.log("resp data", message_id, message);
-      } else {
-        const { message } = await response.json();
-        console.error("Unable to call server", message);
-      }
-    } catch (e) {
-      console.error("Unable to call server", e);
-    }
+    await sendPostRequest(
+      `${SERVER_URL}/send_message`,
+      { message_id },
+      "Message sent!",
+      "Unable to send message"
+    );
   };
 
   const handleSubmitFeedback = async () => {
@@ -148,26 +119,12 @@ export const Generation = () => {
     // send feedback and messageid to backend
     const { message_id } = messages[currentIndex];
     const feedback = feedbacks[currentIndex];
-    try {
-      const response = await fetch(`${SERVER_URL}/submit_feedback`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message_id, feedback }),
-      });
-      if (response.ok) {
-        console.log("send feedback", response);
-        toast.success("Feedback submitted!");
-        const { message, messageId } = await response.json();
-        console.log("resp data", message_id, message);
-      } else {
-        const { message } = await response.json();
-        console.error("Unable to call server", message);
-      }
-    } catch (e) {
-      console.error("Unable to call server", e);
-    }
+    await sendPostRequest(
+      `${SERVER_URL}/submit_feedback`,
+      { message_id, feedback },
+      "Feedback submitted!",
+      "Unable to submit feedback"
+    );
   };
 
   const handleCopyClick = () => {

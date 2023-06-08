@@ -8,7 +8,7 @@ import {
   CardContent,
   Button,
 } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import logo from "./rubylogo.png";
 
@@ -16,9 +16,8 @@ export const LandingPage = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/configure');
+    navigate("/configure");
   };
-
 
   return (
     <Box
@@ -63,7 +62,14 @@ export const LandingPage = () => {
         </CardContent>
       </Card>
       <Box sx={{ mt: 5 }}>
-      <Button variant="contained" size="large" color="warning" onClick={handleClick}>Configure</Button>
+        <Button
+          variant="contained"
+          size="large"
+          color="warning"
+          onClick={handleClick}
+        >
+          Configure
+        </Button>
       </Box>
     </Box>
   );
