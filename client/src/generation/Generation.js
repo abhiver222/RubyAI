@@ -83,6 +83,7 @@ export const Generation = () => {
   const handleGenerate = async () => {
     try {
       setGenerateDisabled(true);
+      setMessages([]);
       toast.info("Generating messages, this might take a few seconds...", {
         autoClose: 5000,
       });

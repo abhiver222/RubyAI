@@ -1,8 +1,7 @@
 from flask import Flask, request, jsonify
 from tinydb import TinyDB, Query
 from ruby import Ruby
-from flask_cors import CORS, cross_origin
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
@@ -15,14 +14,6 @@ def health():
     print("health check")
     return jsonify({'message': 'Server is up and running'})
 
-@app.route('/print_table', methods=['GET'])
-def print_db():
-    print("print db")
-    table = request.args.get('table', "company")
-    ruby.print_db(table)
-    return jsonify({'message': 'printed db successfully'})
-
-# Endpoint for storing company information
 @app.route('/save_company_info', methods=['POST'])
 def store_company_info():
     company_data = request.json
@@ -36,7 +27,6 @@ def get_company_info():
     info = ruby.get_company_info()
     return jsonify({'message': 'Company info fetched successfully', 'company_info': info}), 200
 
-# Endpoint for storing job description information
 @app.route('/save_job_description', methods=['POST'])
 def store_job_description():
     job_data = request.json
