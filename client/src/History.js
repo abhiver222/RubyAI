@@ -98,7 +98,7 @@ export const History = () => {
             </FormControl>
           </Box>
         </Box>
-        {isPopulated(filteredMessages) &&
+        {isPopulated(filteredMessages) ? (
           filteredMessages.map((message, index) => (
             <Box key={index} sx={{ marginBottom: "20px" }}>
               <Card
@@ -158,7 +158,10 @@ export const History = () => {
                 </Box>
               </Card>
             </Box>
-          ))}
+          ))) : 
+          <Box sx={{display:"flex", justifyContent:"center", mt:12}}>
+            <Typography variant="h5" sx={{ mb: 3 }}>No messages generated</Typography>
+          </Box>}
       </Container>
     </Box>
   );
