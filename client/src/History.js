@@ -38,6 +38,7 @@ export const History = () => {
   }, []);
 
   useEffect(() => {
+    if(!isPopulated(messages)) return;
     setFilteredMessages(
       messages.filter((message) => {
         if (filter === "with_feedback") {
